@@ -4,1050 +4,399 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>XECTOR1</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>XECTOR1 KPI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0a;
-  --bg1: #111111;
-  --bg2: #181818;
-  --bg3: #202020;
-  --line: rgba(255,255,255,0.08);
-  --line2: rgba(255,255,255,0.14);
-  --text: #f5f5f5;
-  --text2: rgba(245,245,245,0.5);
-  --text3: rgba(245,245,245,0.28);
-  --accent: #e8ff4d;
-  --accent-dim: rgba(232,255,77,0.12);
-  --accent-mid: rgba(232,255,77,0.35);
-  --red: #ff4d4d;
-  --red-dim: rgba(255,77,77,0.12);
-  --teal: #4dffe0;
-  --teal-dim: rgba(77,255,224,0.1);
-  --sans: 'DM Sans', sans-serif;
-  --mono: 'DM Mono', monospace;
-  --r: 12px;
-  --r-sm: 8px;
+  --bg:      #0d0d0d;
+  --surface: #1a1a1a;
+  --surface2:#242424;
+  --border:  #2e2e2e;
+  --border2: #3d3d3d;
+  --white:   #ffffff;
+  --gray1:   #e0e0e0;
+  --gray2:   #a0a0a0;
+  --gray3:   #606060;
+  --yellow:  #f5e642;
+  --yellow-bg: rgba(245,230,66,0.14);
+  --cyan:    #40d9c8;
+  --cyan-bg: rgba(64,217,200,0.12);
+  --violet:  #a78bfa;
+  --violet-bg: rgba(167,139,250,0.14);
+  --red:     #f87171;
+  --red-bg:  rgba(248,113,113,0.12);
+  --green:   #4ade80;
+  --green-bg:rgba(74,222,128,0.12);
+  --sans: 'Outfit', sans-serif;
+  --mono: 'Roboto Mono', monospace;
+  --r:   14px;
+  --r-sm: 10px;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-html { height: 100%; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  font-weight: 300;
-  height: 100%;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-.shell {
-  display: flex;
-  flex-direction: column;
-  height: 100dvh;
-  max-width: 430px;
-  margin: 0 auto;
-  position: relative;
-}
-
-/* ── Header ── */
-.hdr {
-  padding: 52px 24px 20px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-shrink: 0;
-}
-
-.brand {
-  font-family: var(--mono);
-  font-weight: 300;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  color: var(--text3);
-  text-transform: uppercase;
-}
-
-.streak {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--accent-dim);
-  border: 1px solid var(--accent-mid);
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--accent);
-  letter-spacing: 0.04em;
-}
-
-.streak-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  animation: blink 2.4s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-/* ── Tabs ── */
-.tabs {
-  display: flex;
-  gap: 2px;
-  padding: 0 24px 16px;
-  flex-shrink: 0;
-}
-
-.tab {
-  flex: 1;
-  padding: 8px 4px;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text3);
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--line);
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
-}
-
-.tab.on {
-  color: var(--text);
-  border-bottom-color: var(--text);
-}
-
-/* ── Scroll content ── */
-.content {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0 24px 32px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--white); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow: hidden; }
+.shell { display: flex; flex-direction: column; height: 100dvh; max-width: 430px; margin: 0 auto; }
+.hdr { padding: 54px 20px 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.hdr-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--white); }
+.hdr-left p  { font-size: 13px; color: var(--gray2); margin-top: 2px; font-weight: 400; }
+.streak-pill { display: flex; align-items: center; gap: 7px; background: var(--yellow-bg); border: 1.5px solid rgba(245,230,66,0.4); border-radius: 100px; padding: 7px 14px; font-size: 14px; font-weight: 600; color: var(--yellow); }
+.streak-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)} }
+.tabs { display: flex; padding: 0 20px 16px; gap: 6px; flex-shrink: 0; }
+.tab { flex: 1; padding: 9px 4px; font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--gray2); background: var(--surface); border: 1.5px solid transparent; border-radius: var(--r-sm); cursor: pointer; transition: all 0.18s; }
+.tab.on { color: var(--white); border-color: var(--border2); background: var(--surface2); }
+.content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0 20px 24px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .content::-webkit-scrollbar { display: none; }
-
 .pane { display: none; }
 .pane.on { display: block; }
-
-/* ── Section header ── */
-.sec-hdr {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 24px 0 12px;
-}
-.sec-hdr:first-child { margin-top: 0; }
-
-.sec-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text3);
-}
-
-.sec-line {
-  flex: 1;
-  height: 1px;
-  background: var(--line);
-}
-
-/* ── KPI Grid ── */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-
-.card {
-  background: var(--bg1);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  padding: 18px 16px 16px;
-  position: relative;
-  transition: border-color 0.25s;
-}
-
-.card-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 12px;
-}
-
-.card-value {
-  font-size: 38px;
-  font-weight: 300;
-  line-height: 1;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-}
-
-.grid3 .card-value { font-size: 30px; }
-
-.card-sub {
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--text3);
-  margin-top: 8px;
-  letter-spacing: 0.06em;
-}
-
-.delta {
-  position: absolute;
-  top: 14px; right: 14px;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 400;
-  padding: 3px 7px;
-  border-radius: 4px;
-}
-.delta.up { background: var(--accent-dim); color: var(--accent); }
-.delta.dn { background: var(--red-dim); color: var(--red); }
-
-/* ── Progress ── */
-.prog-wrap { margin-bottom: 24px; }
-
-.prog-item { margin-bottom: 16px; }
-
-.prog-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 7px;
-}
-
-.prog-name {
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text2);
-}
-
-.prog-right {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.prog-val {
-  font-family: var(--mono);
-  font-size: 20px;
-  font-weight: 300;
-  color: var(--text);
-  letter-spacing: -0.01em;
-}
-
-.prog-pct {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-}
-
-.prog-track {
-  height: 2px;
-  background: var(--bg3);
-  border-radius: 1px;
-  overflow: visible;
-  position: relative;
-}
-
-.prog-fill {
-  height: 2px;
-  border-radius: 1px;
-  background: var(--accent);
-  transition: width 0.9s cubic-bezier(0.16,1,0.3,1);
-  position: relative;
-}
-
-.prog-fill::after {
-  content: '';
-  position: absolute;
-  right: -1px; top: -3px;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  transition: opacity 0.3s;
-}
-
-.prog-fill.teal { background: var(--teal); }
-.prog-fill.teal::after { background: var(--teal); }
-
-.prog-fill.zero::after { opacity: 0; }
-
-/* ── Funnel ── */
-.funnel { display: flex; flex-direction: column; gap: 6px; }
-
-.fn-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  background: var(--bg1);
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  position: relative;
-  overflow: hidden;
-}
-
-.fn-bg {
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  border-radius: var(--r-sm);
-  transition: width 1.1s cubic-bezier(0.16,1,0.3,1);
-  opacity: 0.07;
-}
-
-.fn-label {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--text2);
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  white-space: nowrap;
-}
-
-.fn-num {
-  font-family: var(--mono);
-  font-size: 22px;
-  font-weight: 300;
-  position: relative;
-  z-index: 1;
-  letter-spacing: -0.02em;
-}
-
-/* ── Charts ── */
-.chart-card {
-  background: var(--bg1);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  padding: 20px 18px 16px;
-  margin-bottom: 10px;
-}
-
-.chart-title {
-  font-family: var(--mono);
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 16px;
-}
-
-/* ── Calendar ── */
-.cal {
-  background: var(--bg1);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  padding: 18px;
-}
-
-.cal-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
-  margin-bottom: 4px;
-}
-
-.cal-day-hdr {
-  font-family: var(--mono);
-  font-size: 8px;
-  color: var(--text3);
-  text-align: center;
-  padding-bottom: 6px;
-  letter-spacing: 0.05em;
-}
-
-.cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
-}
-
-.cal-cell {
-  aspect-ratio: 1;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--text3);
-  background: var(--bg2);
-}
-
-.cal-cell.active { background: rgba(232,255,77,0.18); color: var(--accent); }
-.cal-cell.strong { background: rgba(232,255,77,0.38); color: #0a0a0a; font-weight: 500; }
-.cal-cell.today { outline: 1px solid rgba(232,255,77,0.5); outline-offset: -1px; }
-.cal-cell.empty { background: transparent; }
-
-/* ── Input ── */
-.input-section { margin-bottom: 20px; }
-
-.input-label-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.input-period {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text3);
-}
-
+.sec { display: flex; align-items: center; gap: 10px; margin: 24px 0 12px; }
+.sec:first-child { margin-top: 0; }
+.sec-text { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray3); white-space: nowrap; }
+.sec-line { flex: 1; height: 1px; background: var(--border); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 18px 16px 16px; position: relative; }
+.card-dot { width: 8px; height: 8px; border-radius: 50%; margin-bottom: 12px; }
+.card-label { font-size: 13px; font-weight: 500; color: var(--gray2); margin-bottom: 8px; }
+.card-num { font-size: 44px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--white); font-variant-numeric: tabular-nums; }
+.grid3 .card-num { font-size: 34px; }
+.card-sub { font-size: 11px; color: var(--gray3); margin-top: 8px; font-weight: 400; }
+.delta { position: absolute; top: 16px; right: 14px; font-size: 12px; font-weight: 600; font-family: var(--mono); padding: 3px 8px; border-radius: 6px; }
+.up { background: var(--green-bg); color: var(--green); }
+.dn { background: var(--red-bg);   color: var(--red); }
+.prog-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 20px; margin-bottom: 12px; }
+.prog-item { margin-bottom: 18px; }
+.prog-item:last-child { margin-bottom: 0; }
+.prog-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.prog-name { font-size: 14px; font-weight: 500; color: var(--gray1); }
+.prog-nums { display: flex; align-items: baseline; gap: 4px; }
+.prog-current { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; }
+.prog-goal    { font-size: 13px; color: var(--gray3); font-weight: 400; }
+.prog-pct     { font-size: 13px; font-weight: 600; margin-left: 6px; }
+.prog-track { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+.prog-fill  { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
+.funnel { display: flex; flex-direction: column; gap: 8px; }
+.fn-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); position: relative; overflow: hidden; }
+.fn-bg  { position: absolute; left: 0; top: 0; bottom: 0; opacity: 0.1; transition: width 1s cubic-bezier(0.16,1,0.3,1); }
+.fn-label { font-size: 14px; font-weight: 500; color: var(--gray1); position: relative; z-index: 1; }
+.fn-num   { font-size: 26px; font-weight: 700; position: relative; z-index: 1; letter-spacing: -0.02em; }
+.chart-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 20px 18px; margin-bottom: 10px; }
+.chart-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray3); margin-bottom: 16px; }
+.cal-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 20px; }
+.cal-hdrs { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; margin-bottom: 6px; }
+.cal-hdr  { font-size: 11px; font-weight: 500; color: var(--gray3); text-align: center; padding-bottom: 4px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+.cal-cell { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; color: var(--gray3); background: var(--surface2); }
+.cal-cell.active { background: rgba(245,230,66,0.2); color: var(--yellow); }
+.cal-cell.strong { background: rgba(245,230,66,0.5); color: #1a1a00; font-weight: 700; }
+.cal-cell.today  { outline: 2px solid var(--yellow); outline-offset: -2px; }
+.cal-cell.empty  { background: transparent; }
+.input-block { margin-bottom: 20px; }
+.input-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.input-period { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray3); white-space: nowrap; }
 .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.input-full { grid-column: 1/-1; }
-
-.field-wrap {
-  background: var(--bg1);
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  transition: border-color 0.2s;
-}
-.field-wrap:focus-within { border-color: var(--line2); }
-
-.field-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text3);
-}
-
-.field-input {
-  background: transparent;
-  border: none;
-  outline: none;
-  font-family: var(--mono);
-  font-size: 24px;
-  font-weight: 300;
-  color: var(--text);
-  width: 100%;
-  letter-spacing: -0.02em;
-}
-
-.field-input::placeholder {
-  color: var(--text3);
-  font-size: 18px;
-}
-
-.save-btn {
-  width: 100%;
-  padding: 16px;
-  margin-top: 4px;
-  background: var(--text);
-  color: var(--bg);
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: none;
-  border-radius: var(--r);
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s;
-}
-
-.save-btn:hover { opacity: 0.88; }
-.save-btn:active { transform: scale(0.99); }
-
-/* Goal setting */
-.goal-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-/* ── Toast ── */
-.toast {
-  position: fixed;
-  bottom: 88px;
-  left: 50%;
-  transform: translateX(-50%) translateY(12px);
-  background: var(--bg2);
-  border: 1px solid var(--line2);
-  border-radius: 24px;
-  padding: 11px 20px;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  white-space: nowrap;
-  z-index: 999;
-  max-width: 90vw;
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ── Bottom nav ── */
-.nav {
-  display: flex;
-  border-top: 1px solid var(--line);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  flex-shrink: 0;
-  background: rgba(10,10,10,0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.nav-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 4px 14px;
-  gap: 5px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-icon svg { opacity: 0.3; transition: opacity 0.2s; }
-.nav-btn.on .nav-icon svg { opacity: 1; }
-
-.nav-text {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text3);
-  transition: color 0.2s;
-}
-.nav-btn.on .nav-text { color: var(--text); }
-
-/* ── Divider ── */
-.divider { height: 1px; background: var(--line); margin: 20px 0; }
-
-/* ── Animate in ── */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.card, .fn-row, .chart-card, .cal, .field-wrap {
-  animation: fade-up 0.4s ease both;
-}
+.input-full { grid-column: 1 / -1; }
+.field { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r-sm); padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.2s; }
+.field:focus-within { border-color: var(--border2); }
+.field-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray2); }
+.field input { background: transparent; border: none; outline: none; font-family: var(--sans); font-size: 28px; font-weight: 700; color: var(--white); width: 100%; letter-spacing: -0.02em; }
+.field input::placeholder { color: var(--gray3); font-weight: 400; font-size: 22px; }
+.btn { width: 100%; padding: 17px; margin-top: 6px; background: var(--white); color: #0d0d0d; font-family: var(--sans); font-size: 16px; font-weight: 700; letter-spacing: 0.02em; border: none; border-radius: var(--r); cursor: pointer; transition: opacity 0.2s, transform 0.12s; }
+.btn:hover  { opacity: 0.9; }
+.btn:active { transform: scale(0.99); opacity: 0.8; }
+.divider { height: 1px; background: var(--border); margin: 24px 0; }
+.toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%) translateY(12px); background: var(--surface2); border: 1.5px solid var(--border2); border-radius: 100px; padding: 13px 22px; font-size: 14px; font-weight: 500; color: var(--white); opacity: 0; pointer-events: none; white-space: nowrap; max-width: 90vw; z-index: 999; transition: opacity 0.3s, transform 0.35s cubic-bezier(0.34,1.4,0.64,1); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.nav { display: flex; border-top: 1px solid var(--border); flex-shrink: 0; background: rgba(13,13,13,0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding-bottom: env(safe-area-inset-bottom,0); }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 12px 4px 14px; gap: 5px; background: transparent; border: none; cursor: pointer; }
+.nav-ico { font-size: 20px; opacity: 0.35; transition: opacity 0.2s; }
+.nav-txt { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--gray3); transition: color 0.2s; }
+.nav-btn.on .nav-ico { opacity: 1; }
+.nav-btn.on .nav-txt { color: var(--white); }
 </style>
 </head>
 <body>
-
 <div class="shell">
-
   <div class="hdr">
-    <div class="brand">Xector1 &nbsp;/&nbsp; KPI</div>
-    <div class="streak">
+    <div class="hdr-left">
+      <h1>XECTOR1</h1>
+      <p id="today-label"></p>
+    </div>
+    <div class="streak-pill">
       <span class="streak-dot"></span>
-      <span id="streak-num">0</span>&thinsp;day streak
+      <span id="streak-num">0</span>日連続
     </div>
   </div>
-
   <div class="tabs">
-    <button class="tab on" onclick="go('overview',this)">Overview</button>
-    <button class="tab" onclick="go('funnel',this)">Funnel</button>
-    <button class="tab" onclick="go('trend',this)">Trend</button>
-    <button class="tab" onclick="go('input',this)">Input</button>
+    <button class="tab on" onclick="go('overview',this)">概要</button>
+    <button class="tab"    onclick="go('funnel',this)">ファネル</button>
+    <button class="tab"    onclick="go('trend',this)">推移</button>
+    <button class="tab"    onclick="go('input',this)">入力</button>
   </div>
-
   <div class="content">
-
-    <!-- OVERVIEW -->
     <div class="pane on" id="pane-overview">
-
-      <div class="sec-hdr"><span class="sec-label">Daily</span><span class="sec-line"></span></div>
-
-      <div class="grid2" style="margin-bottom:8px;">
+      <div class="sec"><span class="sec-text">毎日</span><span class="sec-line"></span></div>
+      <div class="grid2">
         <div class="card">
-          <div class="card-label">DM 送信</div>
-          <div class="card-value" id="v-dm">—</div>
+          <div class="card-dot" style="background:var(--yellow);"></div>
+          <div class="card-label">DM 送信数</div>
+          <div class="card-num" id="v-dm">—</div>
           <div class="card-sub">Today</div>
           <div class="delta" id="d-dm"></div>
         </div>
         <div class="card">
+          <div class="card-dot" style="background:var(--cyan);"></div>
           <div class="card-label">LINE 追加</div>
-          <div class="card-value" id="v-line">—</div>
+          <div class="card-num" id="v-line">—</div>
           <div class="card-sub">Today</div>
           <div class="delta" id="d-line"></div>
         </div>
       </div>
-
-      <div class="prog-wrap">
+      <div class="prog-card">
         <div class="prog-item">
-          <div class="prog-row">
+          <div class="prog-top">
             <span class="prog-name">DM 達成率</span>
-            <div class="prog-right">
-              <span class="prog-val" id="pv-dm">0</span>
-              <span class="prog-pct" id="pp-dm">/ 0%</span>
+            <div class="prog-nums">
+              <span class="prog-current" id="pv-dm">0</span>
+              <span class="prog-goal" id="pg-dm">/ 30</span>
+              <span class="prog-pct" style="color:var(--yellow);" id="pp-dm">0%</span>
             </div>
           </div>
-          <div class="prog-track">
-            <div class="prog-fill zero" id="pb-dm" style="width:0%"></div>
-          </div>
+          <div class="prog-track"><div class="prog-fill" id="pb-dm" style="width:0%;background:var(--yellow);"></div></div>
         </div>
         <div class="prog-item">
-          <div class="prog-row">
+          <div class="prog-top">
             <span class="prog-name">LINE 達成率</span>
-            <div class="prog-right">
-              <span class="prog-val" id="pv-line">0</span>
-              <span class="prog-pct" id="pp-line">/ 0%</span>
+            <div class="prog-nums">
+              <span class="prog-current" id="pv-line">0</span>
+              <span class="prog-goal" id="pg-line">/ 5</span>
+              <span class="prog-pct" style="color:var(--cyan);" id="pp-line">0%</span>
             </div>
           </div>
-          <div class="prog-track">
-            <div class="prog-fill teal zero" id="pb-line" style="width:0%"></div>
-          </div>
+          <div class="prog-track"><div class="prog-fill" id="pb-line" style="width:0%;background:var(--cyan);"></div></div>
         </div>
       </div>
-
-      <div class="sec-hdr"><span class="sec-label">Weekly</span><span class="sec-line"></span></div>
-      <div class="grid2" style="margin-bottom:8px;">
+      <div class="sec"><span class="sec-text">週次</span><span class="sec-line"></span></div>
+      <div class="grid2">
         <div class="card">
-          <div class="card-label">AD 予約</div>
-          <div class="card-value" id="v-ad-rsv">—</div>
+          <div class="card-dot" style="background:var(--violet);"></div>
+          <div class="card-label">AD 予約数</div>
+          <div class="card-num" id="v-ad-rsv">—</div>
           <div class="card-sub">This week</div>
         </div>
         <div class="card">
-          <div class="card-label">AD 実施</div>
-          <div class="card-value" id="v-ad-done">—</div>
+          <div class="card-dot" style="background:var(--violet);"></div>
+          <div class="card-label">AD 実施数</div>
+          <div class="card-num" id="v-ad-done">—</div>
           <div class="card-sub">This week</div>
         </div>
       </div>
-
-      <div class="sec-hdr"><span class="sec-label">Monthly</span><span class="sec-line"></span></div>
+      <div class="sec"><span class="sec-text">月次</span><span class="sec-line"></span></div>
       <div class="grid3">
         <div class="card">
+          <div class="card-dot" style="background:var(--red);"></div>
           <div class="card-label">面談</div>
-          <div class="card-value" id="v-meet">—</div>
-          <div class="card-sub">This month</div>
+          <div class="card-num" id="v-meet">—</div>
+          <div class="card-sub">Today</div>
         </div>
         <div class="card">
+          <div class="card-dot" style="background:var(--red);"></div>
           <div class="card-label">契約</div>
-          <div class="card-value" id="v-contract">—</div>
-          <div class="card-sub">This month</div>
+          <div class="card-num" id="v-contract">—</div>
+          <div class="card-sub">Today</div>
         </div>
         <div class="card">
+          <div class="card-dot" style="background:var(--green);"></div>
           <div class="card-label">入金</div>
-          <div class="card-value" id="v-payment">—</div>
-          <div class="card-sub">This month</div>
+          <div class="card-num" id="v-payment">—</div>
+          <div class="card-sub">Today</div>
         </div>
       </div>
     </div>
-
-    <!-- FUNNEL -->
     <div class="pane" id="pane-funnel">
-      <div class="sec-hdr" style="margin-top:0;"><span class="sec-label">Monthly Funnel</span><span class="sec-line"></span></div>
+      <div class="sec" style="margin-top:0;"><span class="sec-text">今月のファネル</span><span class="sec-line"></span></div>
       <div class="funnel" id="funnel"></div>
-      <div class="sec-hdr"><span class="sec-label">Weekly AD</span><span class="sec-line"></span></div>
+      <div class="sec"><span class="sec-text">今週のAD</span><span class="sec-line"></span></div>
       <div class="chart-card">
-        <div class="chart-title">Reservation vs Completion</div>
-        <div style="position:relative;height:140px;">
-          <canvas id="adChart" role="img" aria-label="週次AD予約数と実施数の比較">AD予約と実施の比較グラフ。</canvas>
-        </div>
+        <div class="chart-label">予約 vs 実施</div>
+        <div style="position:relative;height:150px;"><canvas id="adChart" role="img" aria-label="AD予約と実施の比較">AD比較グラフ。</canvas></div>
       </div>
     </div>
-
-    <!-- TREND -->
     <div class="pane" id="pane-trend">
-      <div class="sec-hdr" style="margin-top:0;"><span class="sec-label">14-Day Activity</span><span class="sec-line"></span></div>
+      <div class="sec" style="margin-top:0;"><span class="sec-text">直近14日</span><span class="sec-line"></span></div>
       <div class="chart-card">
-        <div class="chart-title">DM + LINE Daily</div>
-        <div style="position:relative;height:180px;">
-          <canvas id="trendChart" role="img" aria-label="14日間のDMとLINE推移">14日間の推移グラフ。</canvas>
-        </div>
+        <div class="chart-label">DM + LINE 推移</div>
+        <div style="position:relative;height:190px;"><canvas id="trendChart" role="img" aria-label="14日推移グラフ">推移グラフ。</canvas></div>
       </div>
-      <div class="sec-hdr"><span class="sec-label">Activity Map</span><span class="sec-line"></span></div>
-      <div class="cal">
-        <div class="cal-days">
-          <div class="cal-day-hdr">日</div><div class="cal-day-hdr">月</div>
-          <div class="cal-day-hdr">火</div><div class="cal-day-hdr">水</div>
-          <div class="cal-day-hdr">木</div><div class="cal-day-hdr">金</div>
-          <div class="cal-day-hdr">土</div>
+      <div class="sec"><span class="sec-text">活動カレンダー</span><span class="sec-line"></span></div>
+      <div class="cal-card">
+        <div class="cal-hdrs">
+          <div class="cal-hdr">日</div><div class="cal-hdr">月</div><div class="cal-hdr">火</div>
+          <div class="cal-hdr">水</div><div class="cal-hdr">木</div><div class="cal-hdr">金</div><div class="cal-hdr">土</div>
         </div>
         <div class="cal-grid" id="cal"></div>
       </div>
     </div>
-
-    <!-- INPUT -->
     <div class="pane" id="pane-input">
-
-      <div class="input-section">
-        <div class="input-label-row">
-          <span class="input-period">Daily</span>
-          <span class="sec-line"></span>
-          <span style="font-family:var(--mono);font-size:9px;color:var(--text3);" id="input-date-label"></span>
+      <div class="input-block">
+        <div class="input-header">
+          <span class="input-period">毎日</span><span class="sec-line"></span>
+          <span style="font-size:12px;color:var(--gray3);" id="input-today"></span>
         </div>
         <div class="input-grid">
-          <div class="field-wrap">
-            <div class="field-label">DM 送信数</div>
-            <input class="field-input" type="number" id="in-dm" min="0" placeholder="0" inputmode="numeric">
-          </div>
-          <div class="field-wrap">
-            <div class="field-label">LINE 追加</div>
-            <input class="field-input" type="number" id="in-line" min="0" placeholder="0" inputmode="numeric">
-          </div>
+          <div class="field"><div class="field-label">DM 送信数</div><input type="number" id="in-dm" min="0" placeholder="0" inputmode="numeric"></div>
+          <div class="field"><div class="field-label">LINE 追加</div><input type="number" id="in-line" min="0" placeholder="0" inputmode="numeric"></div>
         </div>
       </div>
-
-      <div class="input-section">
-        <div class="input-label-row">
-          <span class="input-period">Weekly</span>
-          <span class="sec-line"></span>
-          <span style="font-family:var(--mono);font-size:9px;color:var(--text3);">週末にまとめて</span>
-        </div>
+      <div class="input-block">
+        <div class="input-header"><span class="input-period">週次</span><span class="sec-line"></span><span style="font-size:12px;color:var(--gray3);">週末に入力</span></div>
         <div class="input-grid">
-          <div class="field-wrap">
-            <div class="field-label">AD 予約数</div>
-            <input class="field-input" type="number" id="in-ad-rsv" min="0" placeholder="—" inputmode="numeric">
-          </div>
-          <div class="field-wrap">
-            <div class="field-label">AD 実施数</div>
-            <input class="field-input" type="number" id="in-ad-done" min="0" placeholder="—" inputmode="numeric">
-          </div>
+          <div class="field"><div class="field-label">AD 予約数</div><input type="number" id="in-ad-rsv" min="0" placeholder="—" inputmode="numeric"></div>
+          <div class="field"><div class="field-label">AD 実施数</div><input type="number" id="in-ad-done" min="0" placeholder="—" inputmode="numeric"></div>
         </div>
       </div>
-
-      <div class="input-section">
-        <div class="input-label-row">
-          <span class="input-period">Monthly</span>
-          <span class="sec-line"></span>
-          <span style="font-family:var(--mono);font-size:9px;color:var(--text3);">月末にまとめて</span>
-        </div>
+      <div class="input-block">
+        <div class="input-header"><span class="input-period">月次</span><span class="sec-line"></span><span style="font-size:12px;color:var(--gray3);">月末に入力</span></div>
         <div class="input-grid">
-          <div class="field-wrap">
-            <div class="field-label">面談実施</div>
-            <input class="field-input" type="number" id="in-meet" min="0" placeholder="—" inputmode="numeric">
-          </div>
-          <div class="field-wrap">
-            <div class="field-label">契約数</div>
-            <input class="field-input" type="number" id="in-contract" min="0" placeholder="—" inputmode="numeric">
-          </div>
-          <div class="field-wrap input-full">
-            <div class="field-label">入金数</div>
-            <input class="field-input" type="number" id="in-payment" min="0" placeholder="—" inputmode="numeric">
-          </div>
+          <div class="field"><div class="field-label">面談実施数</div><input type="number" id="in-meet" min="0" placeholder="—" inputmode="numeric"></div>
+          <div class="field"><div class="field-label">契約数</div><input type="number" id="in-contract" min="0" placeholder="—" inputmode="numeric"></div>
+          <div class="field input-full"><div class="field-label">入金数</div><input type="number" id="in-payment" min="0" placeholder="—" inputmode="numeric"></div>
         </div>
       </div>
-
-      <button class="save-btn" id="save-btn">Save</button>
-
+      <button class="btn" id="save-btn">保存する</button>
       <div class="divider"></div>
-
-      <div class="input-section">
-        <div class="input-label-row">
-          <span class="input-period">Goals</span>
-          <span class="sec-line"></span>
+      <div class="input-block">
+        <div class="input-header"><span class="input-period">目標設定</span><span class="sec-line"></span></div>
+        <div class="input-grid">
+          <div class="field"><div class="field-label">DM 日次目標</div><input type="number" id="goal-dm" min="1" placeholder="30" inputmode="numeric"></div>
+          <div class="field"><div class="field-label">LINE 日次目標</div><input type="number" id="goal-line" min="1" placeholder="5" inputmode="numeric"></div>
         </div>
-        <div class="goal-grid">
-          <div class="field-wrap">
-            <div class="field-label">DM 日次目標</div>
-            <input class="field-input" type="number" id="goal-dm" min="1" placeholder="30" inputmode="numeric">
-          </div>
-          <div class="field-wrap">
-            <div class="field-label">LINE 日次目標</div>
-            <input class="field-input" type="number" id="goal-line" min="1" placeholder="5" inputmode="numeric">
-          </div>
-        </div>
-        <button class="save-btn" id="goal-btn" style="margin-top:8px;">Update Goals</button>
+        <button class="btn" id="goal-btn" style="background:var(--surface2);color:var(--white);border:1.5px solid var(--border2);margin-top:8px;">目標を更新</button>
       </div>
-
     </div>
-
-  </div><!-- /content -->
-
-  <div class="nav">
-    <button class="nav-btn on" onclick="go('overview',this)">
-      <div class="nav-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <rect x="1" y="1" width="6" height="6" rx="1.5" stroke="white" stroke-width="1.2"/>
-          <rect x="11" y="1" width="6" height="6" rx="1.5" stroke="white" stroke-width="1.2"/>
-          <rect x="1" y="11" width="6" height="6" rx="1.5" stroke="white" stroke-width="1.2"/>
-          <rect x="11" y="11" width="6" height="6" rx="1.5" stroke="white" stroke-width="1.2"/>
-        </svg>
-      </div>
-      <span class="nav-text">Overview</span>
-    </button>
-    <button class="nav-btn" onclick="go('funnel',this)">
-      <div class="nav-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path d="M2 3h14M4 8h10M6 13h6" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="nav-text">Funnel</span>
-    </button>
-    <button class="nav-btn" onclick="go('trend',this)">
-      <div class="nav-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <polyline points="2,13 6,8 10,10 16,4" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <span class="nav-text">Trend</span>
-    </button>
-    <button class="nav-btn" onclick="go('input',this)">
-      <div class="nav-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.2"/>
-          <line x1="9" y1="5.5" x2="9" y2="12.5" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-          <line x1="5.5" y1="9" x2="12.5" y2="9" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="nav-text">Input</span>
-    </button>
   </div>
-
-</div><!-- /shell -->
-
+  <div class="nav">
+    <button class="nav-btn on" onclick="go('overview',this)"><span class="nav-ico">◈</span><span class="nav-txt">概要</span></button>
+    <button class="nav-btn"    onclick="go('funnel',this)"><span class="nav-ico">▽</span><span class="nav-txt">ファネル</span></button>
+    <button class="nav-btn"    onclick="go('trend',this)"><span class="nav-ico">↗</span><span class="nav-txt">推移</span></button>
+    <button class="nav-btn"    onclick="go('input',this)"><span class="nav-ico">＋</span><span class="nav-txt">入力</span></button>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const SK = 'x1v3', GK = 'x1g2';
-const load = k => { try { return JSON.parse(localStorage.getItem(k)||'{}'); } catch(e){ return {}; } };
-const save = (k,v) => localStorage.setItem(k, JSON.stringify(v));
-
-const now = new Date();
-const dk = d => d.toISOString().slice(0,10);
-const wk = d => { const j=new Date(d.getFullYear(),0,4); return d.getFullYear()+'-W'+String(Math.ceil(((d-j)/864e5+j.getDay()+1)/7)).padStart(2,'0'); };
-const mk = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
-
-const TODAY = dk(now), THIS_W = wk(now), THIS_M = mk(now);
-const YEST = dk(new Date(now-864e5));
-
-const MSGS = [
-  '記録した。積み上げが全てだ。',
-  'ナイス。今日も前進した。',
-  '継続は力。この調子で行こう。',
-  '数字が動いた。明日もここを開こう。',
-  '完璧。行動した分だけ結果に近づく。',
-];
-
-// Date label
-const D = ['日','月','火','水','木','金','土'];
-document.getElementById('input-date-label').textContent =
-  `${now.getMonth()+1}/${now.getDate()} (${D[now.getDay()]})`;
-
-function streak(s){
-  let n=0, d=new Date(now);
-  while(true){ const k=dk(d); if(s[k]&&(s[k].dm||s[k].line)){n++;d.setDate(d.getDate()-1);}else break; }
-  return n;
-}
-
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),2600);
-}
-
-function setVal(id,v){ document.getElementById(id).textContent = v!==undefined?v:'—'; }
-function setDelta(id,v,p){
-  const el=document.getElementById(id);
-  if(v===undefined||p===undefined){el.textContent='';el.className='delta';return;}
-  const d=v-p;
-  el.textContent=(d>=0?'+':'')+d;
-  el.className='delta '+(d>=0?'up':'dn');
-}
-
+const SK="x1v4",GK="x1g3";
+const ld=k=>{try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return{}}};
+const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const now=new Date();
+const dk=d=>d.toISOString().slice(0,10);
+const wk=d=>{const j=new Date(d.getFullYear(),0,4);return d.getFullYear()+"-W"+String(Math.ceil(((d-j)/864e5+j.getDay()+1)/7)).padStart(2,"0")};
+const mk=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+const TODAY=dk(now),THIS_W=wk(now),THIS_M=mk(now),YEST=dk(new Date(now-864e5));
+const WD=["日","月","火","水","木","金","土"];
+document.getElementById("today-label").textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${WD[now.getDay()]}）`;
+document.getElementById("input-today").textContent=`${now.getMonth()+1}/${now.getDate()}（${WD[now.getDay()]}）`;
+function calcStreak(s){let n=0,d=new Date(now);while(true){const k=dk(d);if(s[k]&&(s[k].dm||s[k].line)){n++;d.setDate(d.getDate()-1);}else break;}return n;}
+const MSGS=["記録した。積み上げが全てだ。","今日も前進した。この調子で。","継続は力。明日もここを開こう。","行動した分だけ結果に近づく。","ナイス。数字が積み上がってる。"];
+function showToast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2800);}
+function setV(id,v){document.getElementById(id).textContent=v!==undefined?v:"—";}
+function setDelta(id,v,p){const el=document.getElementById(id);if(v===undefined||p===undefined){el.textContent="";el.className="delta";return;}const d=v-p;el.textContent=(d>=0?"+":"")+d;el.className="delta "+(d>=0?"up":"dn");}
 function renderOverview(){
-  const s=load(SK), g=load(GK);
-  const td=s[TODAY]||{}, yd=s[YEST]||{}, ww=s['w_'+THIS_W]||{}, mm=s['m_'+THIS_M]||{};
-  const gdm=g.dm||30, gline=g.line||5;
-
-  setVal('v-dm',td.dm); setDelta('d-dm',td.dm,yd.dm);
-  setVal('v-line',td.line); setDelta('d-line',td.line,yd.line);
-  setVal('v-ad-rsv',ww.adRsv); setVal('v-ad-done',ww.adDone);
-  setVal('v-meet',mm.meeting); setVal('v-contract',mm.contract); setVal('v-payment',mm.payment);
-
-  const dmV = td.dm||0, lineV = td.line||0;
-  const dmP = Math.min(Math.round(dmV/gdm*100),100);
-  const lineP = Math.min(Math.round(lineV/gline*100),100);
-
-  document.getElementById('pv-dm').textContent = dmV;
-  document.getElementById('pp-dm').textContent = `/ ${dmP}%`;
-  document.getElementById('pv-line').textContent = lineV;
-  document.getElementById('pp-line').textContent = `/ ${lineP}%`;
-
-  setTimeout(()=>{
-    const bdm=document.getElementById('pb-dm');
-    const bline=document.getElementById('pb-line');
-    bdm.style.width=dmP+'%'; bdm.classList.toggle('zero',dmP===0);
-    bline.style.width=lineP+'%'; bline.classList.toggle('zero',lineP===0);
-  },80);
-
-  document.getElementById('streak-num').textContent=streak(s);
+  const s=ld(SK),g=ld(GK);
+  const td=s[TODAY]||{},yd=s[YEST]||{},ww=s["w_"+THIS_W]||{},mm=s["m_"+THIS_M]||{};
+  const gdm=g.dm||30,gline=g.line||5;
+  setV("v-dm",td.dm);setDelta("d-dm",td.dm,yd.dm);
+  setV("v-line",td.line);setDelta("d-line",td.line,yd.line);
+  setV("v-ad-rsv",ww.adRsv);setV("v-ad-done",ww.adDone);
+  setV("v-meet",mm.meeting);setV("v-contract",mm.contract);setV("v-payment",mm.payment);
+  const dmV=td.dm||0,lineV=td.line||0;
+  const dmP=Math.min(Math.round(dmV/gdm*100),100);
+  const lineP=Math.min(Math.round(lineV/gline*100),100);
+  document.getElementById("pv-dm").textContent=dmV;
+  document.getElementById("pg-dm").textContent="/ "+gdm;
+  document.getElementById("pp-dm").textContent=dmP+"%";
+  document.getElementById("pv-line").textContent=lineV;
+  document.getElementById("pg-line").textContent="/ "+gline;
+  document.getElementById("pp-line").textContent=lineP+"%";
+  setTimeout(()=>{document.getElementById("pb-dm").style.width=dmP+"%";document.getElementById("pb-line").style.width=lineP+"%";},100);
+  document.getElementById("streak-num").textContent=calcStreak(s);
 }
-
 function renderFunnel(){
-  const s=load(SK), mm=s['m_'+THIS_M]||{}, ww=s['w_'+THIS_W]||{};
+  const s=ld(SK),mm=s["m_"+THIS_M]||{},ww=s["w_"+THIS_W]||{};
   let dmSum=0,lineSum=0;
   const d=new Date(now);
-  for(let i=0;i<31;i++){
-    if(mk(d)!==THIS_M)break;
-    const r=s[dk(d)]||{};
-    dmSum+=r.dm||0; lineSum+=r.line||0;
-    d.setDate(d.getDate()-1);
-  }
+  for(let i=0;i<31;i++){if(mk(d)!==THIS_M)break;const r=s[dk(d)]||{};dmSum+=r.dm||0;lineSum+=r.line||0;d.setDate(d.getDate()-1);}
   const rows=[
-    {label:'DM 送信（累計）', val:dmSum, color:'#e8ff4d'},
-    {label:'LINE 追加（累計）', val:lineSum, color:'#4dffe0'},
-    {label:'面談実施', val:mm.meeting||0, color:'#a78bfa'},
-    {label:'契約数', val:mm.contract||0, color:'#f9a8d4'},
-    {label:'入金数', val:mm.payment||0, color:'#86efac'},
+    {label:"DM 送信（累計）",val:dmSum,color:"var(--yellow)"},
+    {label:"LINE 追加（累計）",val:lineSum,color:"var(--cyan)"},
+    {label:"面談実施",val:mm.meeting||0,color:"var(--violet)"},
+    {label:"契約数",val:mm.contract||0,color:"var(--red)"},
+    {label:"入金数",val:mm.payment||0,color:"var(--green)"},
   ];
   const mx=Math.max(...rows.map(r=>r.val),1);
-  document.getElementById('funnel').innerHTML=rows.map((r,i)=>`
-    <div class="fn-row" style="animation-delay:${i*0.06}s;">
+  document.getElementById("funnel").innerHTML=rows.map(r=>`
+    <div class="fn-row">
       <div class="fn-bg" style="background:${r.color};width:${Math.round(r.val/mx*100)}%;"></div>
       <span class="fn-label">${r.label}</span>
       <span class="fn-num" style="color:${r.color};">${r.val}</span>
-    </div>`).join('');
-
-  if(window._adC) window._adC.destroy();
-  window._adC=new Chart(document.getElementById('adChart'),{
-    type:'bar',
-    data:{
-      labels:['予約','実施'],
-      datasets:[{data:[ww.adRsv||0,ww.adDone||0],
-        backgroundColor:['rgba(232,255,77,0.18)','rgba(232,255,77,0.08)'],
-        borderColor:['rgba(232,255,77,0.7)','rgba(232,255,77,0.3)'],
-        borderWidth:1,borderRadius:6}]
-    },
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'rgba(245,245,245,0.3)',font:{family:'DM Mono'},stepSize:1}},
-              x:{grid:{display:false},ticks:{color:'rgba(245,245,245,0.4)',font:{family:'DM Mono',size:11}}}}}
-  });
+    </div>`).join("");
+  if(window._adC)window._adC.destroy();
+  window._adC=new Chart(document.getElementById("adChart"),{type:"bar",data:{labels:["AD予約","AD実施"],datasets:[{data:[ww.adRsv||0,ww.adDone||0],backgroundColor:["rgba(167,139,250,0.25)","rgba(167,139,250,0.1)"],borderColor:["rgba(167,139,250,0.9)","rgba(167,139,250,0.4)"],borderWidth:1.5,borderRadius:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"rgba(255,255,255,0.05)"},ticks:{color:"#606060",font:{size:12},stepSize:1}},x:{grid:{display:false},ticks:{color:"#a0a0a0",font:{size:13}}}}}});
 }
-
 function renderTrend(){
-  const s=load(SK);
-  const days=[];
-  for(let i=13;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);days.push(d);}
+  const s=ld(SK);
+  const days=[];for(let i=13;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);days.push(d);}
   const labels=days.map(d=>`${d.getMonth()+1}/${d.getDate()}`);
   const dmD=days.map(d=>s[dk(d)]?.dm??null);
   const lineD=days.map(d=>s[dk(d)]?.line??null);
-
-  if(window._tC) window._tC.destroy();
-  window._tC=new Chart(document.getElementById('trendChart'),{
-    type:'line',
-    data:{labels,datasets:[
-      {label:'DM',data:dmD,borderColor:'rgba(232,255,77,0.8)',backgroundColor:'rgba(232,255,77,0.04)',tension:0.4,pointRadius:2.5,pointBackgroundColor:'rgba(232,255,77,0.8)',fill:true,spanGaps:true},
-      {label:'LINE',data:lineD,borderColor:'rgba(77,255,224,0.8)',backgroundColor:'rgba(77,255,224,0.04)',tension:0.4,pointRadius:2.5,pointBackgroundColor:'rgba(77,255,224,0.8)',fill:true,borderDash:[4,3],spanGaps:true}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{
-        y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'rgba(245,245,245,0.3)',font:{family:'DM Mono',size:10}}},
-        x:{grid:{display:false},ticks:{color:'rgba(245,245,245,0.3)',font:{family:'DM Mono',size:9},maxRotation:0,autoSkip:true,maxTicksLimit:7}}
-      }}
-  });
-
-  // Calendar
-  const s2=load(SK);
-  const yr=now.getFullYear(), mo=now.getMonth();
-  const first=new Date(yr,mo,1).getDay();
-  const total=new Date(yr,mo+1,0).getDate();
-  let html='';
-  for(let i=0;i<first;i++) html+='<div class="cal-cell empty"></div>';
-  for(let d=1;d<=total;d++){
-    const date=new Date(yr,mo,d);
-    const rec=s2[dk(date)]||{};
-    const t=(rec.dm||0)+(rec.line||0);
-    const isToday=d===now.getDate();
-    let cls='cal-cell';
-    if(t>0) cls+=t>60?' strong':' active';
-    if(isToday) cls+=' today';
-    html+=`<div class="${cls}">${d}</div>`;
-  }
-  document.getElementById('cal').innerHTML=html;
+  if(window._tC)window._tC.destroy();
+  window._tC=new Chart(document.getElementById("trendChart"),{type:"line",data:{labels,datasets:[{label:"DM",data:dmD,borderColor:"rgba(245,230,66,0.9)",backgroundColor:"rgba(245,230,66,0.07)",tension:0.4,pointRadius:3,pointBackgroundColor:"rgba(245,230,66,0.9)",fill:true,spanGaps:true},{label:"LINE",data:lineD,borderColor:"rgba(64,217,200,0.9)",backgroundColor:"rgba(64,217,200,0.07)",tension:0.4,pointRadius:3,pointBackgroundColor:"rgba(64,217,200,0.9)",fill:true,borderDash:[5,3],spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"rgba(255,255,255,0.05)"},ticks:{color:"#606060",font:{size:11}}},x:{grid:{display:false},ticks:{color:"#606060",font:{size:10},maxRotation:0,autoSkip:true,maxTicksLimit:7}}}}});
+  const yr=now.getFullYear(),mo=now.getMonth();
+  const first=new Date(yr,mo,1).getDay(),total=new Date(yr,mo+1,0).getDate();
+  let html="";
+  for(let i=0;i<first;i++)html+="<div class='cal-cell empty'></div>";
+  for(let day=1;day<=total;day++){const date=new Date(yr,mo,day);const rec=s[dk(date)]||{};const t=(rec.dm||0)+(rec.line||0);const isToday=day===now.getDate();let cls="cal-cell";if(t>0)cls+=t>60?" strong":" active";if(isToday)cls+=" today";html+=`<div class="${cls}">${day}</div>`;}
+  document.getElementById("cal").innerHTML=html;
 }
-
 function loadInputs(){
-  const s=load(SK), g=load(GK);
-  const td=s[TODAY]||{}, ww=s['w_'+THIS_W]||{}, mm=s['m_'+THIS_M]||{};
-  if(td.dm!==undefined) document.getElementById('in-dm').value=td.dm;
-  if(td.line!==undefined) document.getElementById('in-line').value=td.line;
-  if(ww.adRsv!==undefined) document.getElementById('in-ad-rsv').value=ww.adRsv;
-  if(ww.adDone!==undefined) document.getElementById('in-ad-done').value=ww.adDone;
-  if(mm.meeting!==undefined) document.getElementById('in-meet').value=mm.meeting;
-  if(mm.contract!==undefined) document.getElementById('in-contract').value=mm.contract;
-  if(mm.payment!==undefined) document.getElementById('in-payment').value=mm.payment;
-  document.getElementById('goal-dm').value=g.dm||30;
-  document.getElementById('goal-line').value=g.line||5;
+  const s=ld(SK),g=ld(GK);
+  const td=s[TODAY]||{},ww=s["w_"+THIS_W]||{},mm=s["m_"+THIS_M]||{};
+  const set=(id,v)=>{if(v!==undefined)document.getElementById(id).value=v;};
+  set("in-dm",td.dm);set("in-line",td.line);set("in-ad-rsv",ww.adRsv);set("in-ad-done",ww.adDone);
+  set("in-meet",mm.meeting);set("in-contract",mm.contract);set("in-payment",mm.payment);
+  set("goal-dm",g.dm||30);set("goal-line",g.line||5);
 }
-
-document.getElementById('save-btn').onclick=()=>{
-  const s=load(SK);
-  const dm=parseInt(document.getElementById('in-dm').value);
-  const line=parseInt(document.getElementById('in-line').value);
-  const adRsv=document.getElementById('in-ad-rsv').value;
-  const adDone=document.getElementById('in-ad-done').value;
-  const meet=document.getElementById('in-meet').value;
-  const ct=document.getElementById('in-contract').value;
-  const pay=document.getElementById('in-payment').value;
-
-  if(!isNaN(dm)||!isNaN(line)) s[TODAY]={dm:isNaN(dm)?0:dm,line:isNaN(line)?0:line};
-  if(adRsv||adDone) s['w_'+THIS_W]={adRsv:parseInt(adRsv)||0,adDone:parseInt(adDone)||0};
-  if(meet||ct||pay) s['m_'+THIS_M]={meeting:parseInt(meet)||0,contract:parseInt(ct)||0,payment:parseInt(pay)||0};
-  save(SK,s);
-  renderOverview();
-  toast(MSGS[Math.floor(Math.random()*MSGS.length)]);
+document.getElementById("save-btn").onclick=()=>{
+  const s=ld(SK);
+  const dm=parseInt(document.getElementById("in-dm").value);
+  const line=parseInt(document.getElementById("in-line").value);
+  const adRsv=document.getElementById("in-ad-rsv").value;
+  const adDone=document.getElementById("in-ad-done").value;
+  const meet=document.getElementById("in-meet").value;
+  const ct=document.getElementById("in-contract").value;
+  const pay=document.getElementById("in-payment").value;
+  if(!isNaN(dm)||!isNaN(line))s[TODAY]={dm:isNaN(dm)?0:dm,line:isNaN(line)?0:line};
+  if(adRsv||adDone)s["w_"+THIS_W]={adRsv:parseInt(adRsv)||0,adDone:parseInt(adDone)||0};
+  if(meet||ct||pay)s["m_"+THIS_M]={meeting:parseInt(meet)||0,contract:parseInt(ct)||0,payment:parseInt(pay)||0};
+  sv(SK,s);renderOverview();showToast(MSGS[Math.floor(Math.random()*MSGS.length)]);
 };
-
-document.getElementById('goal-btn').onclick=()=>{
-  save(GK,{dm:parseInt(document.getElementById('goal-dm').value)||30,line:parseInt(document.getElementById('goal-line').value)||5});
-  renderOverview();
-  toast('目標を更新した。');
+document.getElementById("goal-btn").onclick=()=>{
+  sv(GK,{dm:parseInt(document.getElementById("goal-dm").value)||30,line:parseInt(document.getElementById("goal-line").value)||5});
+  renderOverview();showToast("目標を更新した。");
 };
-
-let curTab='overview';
-function go(id, btn){
-  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tab,.nav-btn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('pane-'+id).classList.add('on');
-  document.querySelectorAll(`[onclick*="'${id}'"]`).forEach(b=>b.classList.add('on'));
-  if(id==='funnel'&&curTab!==id) renderFunnel();
-  if(id==='trend'&&curTab!==id) renderTrend();
-  if(id==='input') loadInputs();
-  curTab=id;
+let cur="overview";
+function go(id,btn){
+  document.querySelectorAll(".pane").forEach(p=>p.classList.remove("on"));
+  document.querySelectorAll(".tab,.nav-btn").forEach(b=>b.classList.remove("on"));
+  document.getElementById("pane-"+id).classList.add("on");
+  document.querySelectorAll(`[onclick*="'${id}'"]`).forEach(b=>b.classList.add("on"));
+  if(id==="funnel"&&cur!==id)renderFunnel();
+  if(id==="trend"&&cur!==id)renderTrend();
+  if(id==="input")loadInputs();
+  cur=id;
 }
-
 renderOverview();
 </script>
 </body>
