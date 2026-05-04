@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>XECTOR1 — KPI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080a0e;
+  --bg2: #0e1117;
+  --bg3: #141820;
+  --surface: #161b26;
+  --surface2: #1e2535;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --neon: #c8ff00;
+  --neon2: #00ffb2;
+  --neon3: #ff4d6d;
+  --neon4: #7b61ff;
+  --text: #f0f4ff;
+  --muted: #6b7494;
+  --muted2: #9aa3c4;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Noto Sans JP', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Grid background */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200,255,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,255,0,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 100px;
+}
+
+/* Header */
+.header {
+  padding: 24px 20px 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: 0.05em;
+  color: var(--neon);
+  text-shadow: 0 0 20px rgba(200,255,0,0.4);
+  line-height: 1;
+}
+
+.logo span {
+  color: var(--text);
+  opacity: 0.4;
+  font-size: 14px;
+  display: block;
+  font-family: var(--font-mono);
+  letter-spacing: 0.2em;
+  margin-top: 2px;
+}
+
+.header-right {
+  text-align: right;
+}
+
+.date-display {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, rgba(200,255,0,0.15), rgba(200,255,0,0.05));
+  border: 1px solid rgba(200,255,0,0.3);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--neon);
+  margin-top: 6px;
+}
+
+.streak-icon { font-size: 14px; }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  padding: 12px 20px;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.tab:hover { color: var(--text); border-color: var(--border2); }
+.tab.active {
+  background: rgba(200,255,0,0.1);
+  border-color: rgba(200,255,0,0.4);
+  color: var(--neon);
+}
+
+/* Sections */
+.section { padding: 20px; display: none; }
+.section.active { display: block; }
+
+/* KPI Cards */
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+.kpi-grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 14px 12px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.15s;
+  cursor: default;
+}
+.kpi-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent, var(--neon));
+  opacity: 0.7;
+}
+
+.kpi-label {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: 42px;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.kpi-grid.triple .kpi-value { font-size: 32px; }
+
+.kpi-unit {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.kpi-delta {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.delta-up { background: rgba(200,255,0,0.12); color: var(--neon); }
+.delta-down { background: rgba(255,77,109,0.12); color: var(--neon3); }
+
+/* Progress bars */
+.progress-section { margin-bottom: 24px; }
+
+.progress-item { margin-bottom: 14px; }
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.progress-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted2);
+}
+.progress-pct {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--neon);
+}
+.progress-track {
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--neon);
+  box-shadow: 0 0 8px rgba(200,255,0,0.5);
+}
+.progress-fill.cyan { background: var(--neon2); box-shadow: 0 0 8px rgba(0,255,178,0.5); }
+.progress-fill.purple { background: var(--neon4); box-shadow: 0 0 8px rgba(123,97,255,0.5); }
+
+/* Funnel */
+.funnel { display: flex; flex-direction: column; gap: 6px; }
+.funnel-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.funnel-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  border-radius: 6px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.12;
+}
+.funnel-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted2);
+  position: relative;
+  z-index: 1;
+  min-width: 100px;
+}
+.funnel-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+.funnel-val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--text);
+  min-width: 36px;
+  text-align: right;
+  margin-left: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Charts */
+.chart-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.chart-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Input form */
+.input-group { margin-bottom: 16px; }
+.input-day-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.input-item { display: flex; flex-direction: column; gap: 5px; }
+.input-item.full { grid-column: 1/-1; }
+.input-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.input-field {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--text);
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.input-field:focus {
+  border-color: var(--neon);
+  box-shadow: 0 0 0 2px rgba(200,255,0,0.12);
+}
+.input-field::placeholder { color: var(--muted); font-size: 14px; }
+
+.save-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--neon);
+  color: #080a0e;
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+.save-btn:hover {
+  background: #d4ff26;
+  box-shadow: 0 0 24px rgba(200,255,0,0.4);
+  transform: translateY(-1px);
+}
+.save-btn:active { transform: scale(0.98); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--surface2);
+  border: 1px solid rgba(200,255,0,0.4);
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--neon);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 0 30px rgba(200,255,0,0.15);
+  z-index: 1000;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Goal targets input */
+.goal-note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-top: 12px;
+}
+
+/* Nav bottom */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(8,10,14,0.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0 14px;
+  gap: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+}
+.nav-item.active { color: var(--neon); }
+.nav-icon { font-size: 18px; line-height: 1; }
+.nav-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Pulse animation */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(200,255,0,0.3); }
+  50% { box-shadow: 0 0 20px rgba(200,255,0,0.7); }
+}
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--neon);
+  display: inline-block;
+  animation: pulse-glow 2s ease-in-out infinite;
+  margin-right: 6px;
+}
+
+/* Number reveal animation */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.kpi-value { animation: count-up 0.5s ease forwards; }
+
+/* Calendar heat */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 8px;
+}
+.cal-cell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--muted);
+  position: relative;
+  cursor: default;
+}
+.cal-cell.has-data { background: rgba(200,255,0,0.15); color: var(--neon); }
+.cal-cell.today { border: 1px solid var(--neon); }
+.cal-cell.high { background: rgba(200,255,0,0.35); }
+.cal-day-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--muted);
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+/* Targets section */
+.target-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.target-row:last-child { border-bottom: none; }
+.target-name { font-size: 12px; color: var(--muted2); }
+.target-input {
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--neon);
+  width: 70px;
+  text-align: center;
+  outline: none;
+}
+.target-input:focus { border-color: var(--neon); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div>
+      <div class="logo">XECTOR1<span>KPI TRACKER</span></div>
+    </div>
+    <div class="header-right">
+      <div class="date-display" id="date-display"></div>
+      <div class="streak-badge">
+        <span class="streak-icon">⚡</span>
+        <span id="streak-count">0</span>日連続
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <div class="section active" id="sec-overview">
+    <div style="margin-bottom:4px; display:flex; align-items:center;">
+      <span class="live-dot"></span>
+      <span style="font-family:var(--font-mono); font-size:10px; color:var(--muted); letter-spacing:0.15em;">LIVE DASHBOARD</span>
+    </div>
+
+    <div class="section-title" style="margin-top:16px;">毎日</div>
+    <div class="kpi-grid">
+      <div class="kpi-card" style="--accent: var(--neon);">
+        <div class="kpi-label">DM 送信数</div>
+        <div class="kpi-value" id="v-dm">—</div>
+        <div class="kpi-unit">TODAY</div>
+        <div class="kpi-delta" id="d-dm"></div>
+      </div>
+      <div class="kpi-card" style="--accent: var(--neon2);">
+        <div class="kpi-label">LINE リスト追加</div>
+        <div class="kpi-value" id="v-line">—</div>
+        <div class="kpi-unit">TODAY</div>
+        <div class="kpi-delta" id="d-line"></div>
+      </div>
+    </div>
+
+    <!-- Progress bars -->
+    <div class="progress-section">
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-name">DM 目標達成率</span>
+          <span class="progress-pct" id="pct-dm">0%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="bar-dm" style="width:0%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-name">LINE 目標達成率</span>
+          <span class="progress-pct" id="pct-line">0%</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill cyan" id="bar-line" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="section-title">週次</div>
+    <div class="kpi-grid">
+      <div class="kpi-card" style="--accent: var(--neon4);">
+        <div class="kpi-label">AD 予約数</div>
+        <div class="kpi-value" id="v-ad-rsv">—</div>
+        <div class="kpi-unit">THIS WEEK</div>
+      </div>
+      <div class="kpi-card" style="--accent: var(--neon4);">
+        <div class="kpi-label">AD 実施数</div>
+        <div class="kpi-value" id="v-ad-done">—</div>
+        <div class="kpi-unit">THIS WEEK</div>
+      </div>
+    </div>
+
+    <div class="section-title">月次</div>
+    <div class="kpi-grid triple">
+      <div class="kpi-card" style="--accent: var(--neon3);">
+        <div class="kpi-label">面談</div>
+        <div class="kpi-value" id="v-meet">—</div>
+        <div class="kpi-unit">THIS MONTH</div>
+      </div>
+      <div class="kpi-card" style="--accent: var(--neon3);">
+        <div class="kpi-label">契約</div>
+        <div class="kpi-value" id="v-contract">—</div>
+        <div class="kpi-unit">THIS MONTH</div>
+      </div>
+      <div class="kpi-card" style="--accent: var(--neon3);">
+        <div class="kpi-label">入金</div>
+        <div class="kpi-value" id="v-payment">—</div>
+        <div class="kpi-unit">THIS MONTH</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Funnel -->
+  <div class="section" id="sec-funnel">
+    <div class="section-title">今月ファネル</div>
+    <div class="funnel" id="funnel-list"></div>
+
+    <div class="section-title" style="margin-top:24px;">今週のAD</div>
+    <div class="chart-box">
+      <div class="chart-label">予約 vs 実施</div>
+      <div style="position:relative; height:160px;">
+        <canvas id="adChart" role="img" aria-label="今週のAD予約数と実施数の棒グラフ">AD予約数と実施数の比較。</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trend -->
+  <div class="section" id="sec-trend">
+    <div class="section-title">直近14日 DM + LINE</div>
+    <div class="chart-box">
+      <div class="chart-label">DAILY ACTIVITY</div>
+      <div style="position:relative; height:200px;">
+        <canvas id="trendChart" role="img" aria-label="直近14日間のDM送信数とLINE追加数の折れ線グラフ">14日間のDMとLINEの推移。</canvas>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:8px;">活動カレンダー</div>
+    <div class="chart-box">
+      <div class="chart-label">THIS MONTH</div>
+      <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; margin-bottom:6px;">
+        <div class="cal-day-label">日</div><div class="cal-day-label">月</div>
+        <div class="cal-day-label">火</div><div class="cal-day-label">水</div>
+        <div class="cal-day-label">木</div><div class="cal-day-label">金</div>
+        <div class="cal-day-label">土</div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="section" id="sec-input">
+    <div class="input-group">
+      <div class="input-day-label"><span class="live-dot"></span>TODAY — <span id="input-date"></span></div>
+      <div class="input-row">
+        <div class="input-item">
+          <div class="input-label">DM 送信数</div>
+          <input class="input-field" type="number" id="in-dm" min="0" placeholder="0">
+        </div>
+        <div class="input-item">
+          <div class="input-label">LINE リスト追加</div>
+          <input class="input-field" type="number" id="in-line" min="0" placeholder="0">
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-day-label">WEEKLY — 週末にまとめて</div>
+      <div class="input-row">
+        <div class="input-item">
+          <div class="input-label">AD 予約数</div>
+          <input class="input-field" type="number" id="in-ad-rsv" min="0" placeholder="—">
+        </div>
+        <div class="input-item">
+          <div class="input-label">AD 実施数</div>
+          <input class="input-field" type="number" id="in-ad-done" min="0" placeholder="—">
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="input-day-label">MONTHLY — 月末にまとめて</div>
+      <div class="input-row">
+        <div class="input-item">
+          <div class="input-label">面談実施数</div>
+          <input class="input-field" type="number" id="in-meet" min="0" placeholder="—">
+        </div>
+        <div class="input-item">
+          <div class="input-label">契約数</div>
+          <input class="input-field" type="number" id="in-contract" min="0" placeholder="—">
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-item full">
+          <div class="input-label">入金数</div>
+          <input class="input-field" type="number" id="in-payment" min="0" placeholder="—">
+        </div>
+      </div>
+    </div>
+
+    <button class="save-btn" id="save-btn">SAVE</button>
+
+    <div class="section-title" style="margin-top:28px;">目標値を設定</div>
+    <div class="chart-box">
+      <div class="target-row">
+        <span class="target-name">DM 日次目標</span>
+        <input class="target-input" type="number" id="goal-dm" min="1" placeholder="30">
+      </div>
+      <div class="target-row">
+        <span class="target-name">LINE 日次目標</span>
+        <input class="target-input" type="number" id="goal-line" min="1" placeholder="5">
+      </div>
+      <div class="target-row" style="border:none; padding-top:12px;">
+        <span></span>
+        <button class="save-btn" style="width:auto; padding:8px 20px; font-size:15px;" id="goal-btn">目標を保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom nav -->
+<div class="bottom-nav">
+  <button class="nav-item active" onclick="switchTab('overview',this)">
+    <span class="nav-icon">◈</span>
+    <span class="nav-label">概要</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('funnel',this)">
+    <span class="nav-icon">▽</span>
+    <span class="nav-label">ファネル</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('trend',this)">
+    <span class="nav-icon">◉</span>
+    <span class="nav-label">トレンド</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('input',this)">
+    <span class="nav-icon">＋</span>
+    <span class="nav-label">入力</span>
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const STORE = 'x1kpi_v2';
+const GOALS = 'x1goals_v1';
+
+function getStore() { try { return JSON.parse(localStorage.getItem(STORE)||'{}'); } catch(e){ return {}; } }
+function setStore(d) { localStorage.setItem(STORE, JSON.stringify(d)); }
+function getGoals() { try { return JSON.parse(localStorage.getItem(GOALS)||'{"dm":30,"line":5}'); } catch(e){ return {dm:30,line:5}; } }
+function setGoals(g) { localStorage.setItem(GOALS, JSON.stringify(g)); }
+
+function dateKey(d){ return d.toISOString().slice(0,10); }
+function weekKey(d){
+  const jan4=new Date(d.getFullYear(),0,4);
+  const w=Math.ceil(((d-jan4)/86400000+jan4.getDay()+1)/7);
+  return d.getFullYear()+'-W'+String(w).padStart(2,'0');
+}
+function monthKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
+
+const now = new Date();
+const todayKey = dateKey(now);
+const thisWeek = weekKey(now);
+const thisMonth = monthKey(now);
+
+// Date display
+const days=['日','月','火','水','木','金','土'];
+document.getElementById('date-display').textContent =
+  `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${days[now.getDay()]}`;
+document.getElementById('input-date').textContent =
+  `${now.getMonth()+1}/${now.getDate()} (${days[now.getDay()]})`;
+
+// Streak calc
+function calcStreak(store){
+  let streak=0, d=new Date(now);
+  while(true){
+    const k=dateKey(d);
+    if(store[k] && (store[k].dm||store[k].line)) { streak++; d.setDate(d.getDate()-1); }
+    else break;
+  }
+  return streak;
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+const MESSAGES=[
+  '⚡ 最高だ。この調子で行こう！',
+  '🔥 数字が積み上がってる。継続は力だ。',
+  '💪 入力完了。今日もXECTOR1を前進させた。',
+  '✅ 記録した。積み上げが未来を作る。',
+  '🎯 ナイス。明日もこの画面を開こう。',
+];
+
+function renderOverview(){
+  const store=getStore();
+  const goals=getGoals();
+  const td=store[todayKey]||{};
+  const yd=store[dateKey(new Date(now.getTime()-86400000))]||{};
+  const wk=store['w_'+thisWeek]||{};
+  const mo=store['m_'+thisMonth]||{};
+
+  function setVal(id, val){ document.getElementById(id).textContent = val!==undefined?val:'—'; }
+  function setDelta(id, val, prev){
+    const el=document.getElementById(id);
+    if(val===undefined||prev===undefined){ el.textContent=''; return; }
+    const diff=val-prev;
+    el.textContent=(diff>=0?'+':'')+diff;
+    el.className='kpi-delta '+(diff>=0?'delta-up':'delta-down');
+  }
+
+  setVal('v-dm',td.dm); setDelta('d-dm',td.dm,yd.dm);
+  setVal('v-line',td.line); setDelta('d-line',td.line,yd.line);
+  setVal('v-ad-rsv',wk.adRsv); setVal('v-ad-done',wk.adDone);
+  setVal('v-meet',mo.meeting); setVal('v-contract',mo.contract); setVal('v-payment',mo.payment);
+
+  // Progress bars
+  const dmPct = td.dm!==undefined ? Math.min(Math.round(td.dm/goals.dm*100),100):0;
+  const linePct = td.line!==undefined ? Math.min(Math.round(td.line/goals.line*100),100):0;
+  setTimeout(()=>{
+    document.getElementById('bar-dm').style.width=dmPct+'%';
+    document.getElementById('bar-line').style.width=linePct+'%';
+  },100);
+  document.getElementById('pct-dm').textContent=dmPct+'%';
+  document.getElementById('pct-line').textContent=linePct+'%';
+
+  // Streak
+  document.getElementById('streak-count').textContent=calcStreak(store);
+}
+
+function renderFunnel(){
+  const store=getStore();
+  const mo=store['m_'+thisMonth]||{};
+  // Monthly DM/LINE sum
+  let dmSum=0,lineSum=0;
+  const d=new Date(now);
+  for(let i=0;i<31;i++){
+    const k=dateKey(d);
+    if(monthKey(d)!==thisMonth) break;
+    if(store[k]){dmSum+=store[k].dm||0;lineSum+=store[k].line||0;}
+    d.setDate(d.getDate()-1);
+  }
+  const items=[
+    {label:'DM送信（累計）',val:dmSum,color:'#c8ff00'},
+    {label:'LINE追加（累計）',val:lineSum,color:'#00ffb2'},
+    {label:'面談実施',val:mo.meeting||0,color:'#7b61ff'},
+    {label:'契約数',val:mo.contract||0,color:'#ff9f43'},
+    {label:'入金数',val:mo.payment||0,color:'#ff4d6d'},
+  ];
+  const maxV=Math.max(...items.map(i=>i.val),1);
+  document.getElementById('funnel-list').innerHTML=items.map(item=>{
+    const pct=Math.round(item.val/maxV*100);
+    return `<div class="funnel-row">
+      <div class="funnel-fill" style="width:${pct}%;background:${item.color};"></div>
+      <div class="funnel-label">${item.label}</div>
+      <div class="funnel-val" style="color:${item.color}">${item.val}</div>
+    </div>`;
+  }).join('');
+
+  // AD chart
+  const wk=store['w_'+thisWeek]||{};
+  if(window.adChartInst) window.adChartInst.destroy();
+  window.adChartInst=new Chart(document.getElementById('adChart'),{
+    type:'bar',
+    data:{
+      labels:['AD予約','AD実施'],
+      datasets:[{data:[wk.adRsv||0,wk.adDone||0],backgroundColor:['rgba(123,97,255,0.7)','rgba(123,97,255,0.35)'],borderColor:['#7b61ff','#7b61ff'],borderWidth:1,borderRadius:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#6b7494',stepSize:1}},x:{grid:{display:false},ticks:{color:'#6b7494'}}}}
+  });
+}
+
+function renderTrend(){
+  const store=getStore();
+  const days14=[];
+  for(let i=13;i>=0;i--){
+    const d=new Date(now); d.setDate(d.getDate()-i); days14.push(d);
+  }
+  const labels=days14.map(d=>(d.getMonth()+1)+'/'+d.getDate());
+  const dmData=days14.map(d=>store[dateKey(d)]?.dm??null);
+  const lineData=days14.map(d=>store[dateKey(d)]?.line??null);
+
+  if(window.trendChartInst) window.trendChartInst.destroy();
+  window.trendChartInst=new Chart(document.getElementById('trendChart'),{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'DM',data:dmData,borderColor:'#c8ff00',backgroundColor:'rgba(200,255,0,0.06)',tension:0.4,pointRadius:3,pointBackgroundColor:'#c8ff00',fill:true,spanGaps:true},
+      {label:'LINE',data:lineData,borderColor:'#00ffb2',backgroundColor:'rgba(0,255,178,0.06)',tension:0.4,pointRadius:3,pointBackgroundColor:'#00ffb2',fill:true,borderDash:[5,3],spanGaps:true}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#6b7494'}},
+              x:{grid:{display:false},ticks:{color:'#6b7494',maxRotation:0,autoSkip:true,maxTicksLimit:7}}}}
+  });
+
+  // Calendar
+  const cal=document.getElementById('cal-grid');
+  const year=now.getFullYear(), month=now.getMonth();
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  let html='';
+  for(let i=0;i<firstDay;i++) html+='<div class="cal-cell"></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const date=new Date(year,month,d);
+    const k=dateKey(date);
+    const rec=store[k];
+    const total=(rec?.dm||0)+(rec?.line||0);
+    const isToday=d===now.getDate();
+    let cls='cal-cell';
+    if(total>0) cls+=' has-data';
+    if(total>50) cls+=' high';
+    if(isToday) cls+=' today';
+    html+=`<div class="${cls}">${d}</div>`;
+  }
+  cal.innerHTML=html;
+}
+
+// Tab switching
+function switchTab(id, btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  if(id==='funnel') renderFunnel();
+  if(id==='trend') renderTrend();
+}
+
+// Save data
+document.getElementById('save-btn').addEventListener('click',()=>{
+  const dm=parseInt(document.getElementById('in-dm').value);
+  const line=parseInt(document.getElementById('in-line').value);
+  const adRsv=document.getElementById('in-ad-rsv').value;
+  const adDone=document.getElementById('in-ad-done').value;
+  const meet=document.getElementById('in-meet').value;
+  const contract=document.getElementById('in-contract').value;
+  const payment=document.getElementById('in-payment').value;
+
+  const store=getStore();
+  if(!isNaN(dm)||!isNaN(line)){
+    store[todayKey]={dm:isNaN(dm)?0:dm, line:isNaN(line)?0:line};
+  }
+  if(adRsv||adDone){
+    store['w_'+thisWeek]={adRsv:parseInt(adRsv)||0, adDone:parseInt(adDone)||0};
+  }
+  if(meet||contract||payment){
+    store['m_'+thisMonth]={meeting:parseInt(meet)||0, contract:parseInt(contract)||0, payment:parseInt(payment)||0};
+  }
+  setStore(store);
+
+  // Load existing values for the inputs
+  const saved=store[todayKey]||{};
+  document.getElementById('in-dm').value=saved.dm||'';
+  document.getElementById('in-line').value=saved.line||'';
+
+  const msg=MESSAGES[Math.floor(Math.random()*MESSAGES.length)];
+  showToast(msg);
+  renderOverview();
+});
+
+// Save goals
+document.getElementById('goal-btn').addEventListener('click',()=>{
+  const dm=parseInt(document.getElementById('goal-dm').value)||30;
+  const line=parseInt(document.getElementById('goal-line').value)||5;
+  setGoals({dm,line});
+  showToast('🎯 目標を更新した！');
+  renderOverview();
+});
+
+// Load existing values into input fields
+function loadInputDefaults(){
+  const store=getStore();
+  const goals=getGoals();
+  const td=store[todayKey]||{};
+  const wk=store['w_'+thisWeek]||{};
+  const mo=store['m_'+thisMonth]||{};
+  if(td.dm!==undefined) document.getElementById('in-dm').value=td.dm;
+  if(td.line!==undefined) document.getElementById('in-line').value=td.line;
+  if(wk.adRsv!==undefined) document.getElementById('in-ad-rsv').value=wk.adRsv;
+  if(wk.adDone!==undefined) document.getElementById('in-ad-done').value=wk.adDone;
+  if(mo.meeting!==undefined) document.getElementById('in-meet').value=mo.meeting;
+  if(mo.contract!==undefined) document.getElementById('in-contract').value=mo.contract;
+  if(mo.payment!==undefined) document.getElementById('in-payment').value=mo.payment;
+  document.getElementById('goal-dm').value=goals.dm;
+  document.getElementById('goal-line').value=goals.line;
+}
+
+renderOverview();
+loadInputDefaults();
+</script>
+</body>
+</html>
