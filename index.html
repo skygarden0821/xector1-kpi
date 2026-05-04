@@ -4,234 +4,284 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>XECTOR1 KPI</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:      #0d0d0d;
-  --surface: #1a1a1a;
-  --surface2:#242424;
-  --border:  #2e2e2e;
-  --border2: #3d3d3d;
-  --white:   #ffffff;
-  --gray1:   #e0e0e0;
-  --gray2:   #a0a0a0;
-  --gray3:   #606060;
-  --yellow:  #f5e642;
-  --yellow-bg: rgba(245,230,66,0.14);
-  --cyan:    #40d9c8;
-  --cyan-bg: rgba(64,217,200,0.12);
-  --violet:  #a78bfa;
-  --violet-bg: rgba(167,139,250,0.14);
-  --red:     #f87171;
-  --red-bg:  rgba(248,113,113,0.12);
-  --green:   #4ade80;
-  --green-bg:rgba(74,222,128,0.12);
+  --bg:       #111113;
+  --card:     #1c1c1f;
+  --card2:    #242428;
+  --border:   #303035;
+  --white:    #ffffff;
+  --gray1:    #c8c8cc;
+  --gray2:    #88888f;
+  --gray3:    #444448;
+  --yellow:   #ffe03d;
+  --cyan:     #3de8d0;
+  --violet:   #b09eff;
+  --red:      #ff6b6b;
+  --green:    #52e08a;
   --sans: 'Outfit', sans-serif;
   --mono: 'Roboto Mono', monospace;
-  --r:   14px;
-  --r-sm: 10px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; }
-body { background: var(--bg); color: var(--white); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow: hidden; }
-.shell { display: flex; flex-direction: column; height: 100dvh; max-width: 430px; margin: 0 auto; }
-.hdr { padding: 54px 20px 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.hdr-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--white); }
-.hdr-left p  { font-size: 13px; color: var(--gray2); margin-top: 2px; font-weight: 400; }
-.streak-pill { display: flex; align-items: center; gap: 7px; background: var(--yellow-bg); border: 1.5px solid rgba(245,230,66,0.4); border-radius: 100px; padding: 7px 14px; font-size: 14px; font-weight: 600; color: var(--yellow); }
-.streak-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)} }
-.tabs { display: flex; padding: 0 20px 16px; gap: 6px; flex-shrink: 0; }
-.tab { flex: 1; padding: 9px 4px; font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--gray2); background: var(--surface); border: 1.5px solid transparent; border-radius: var(--r-sm); cursor: pointer; transition: all 0.18s; }
-.tab.on { color: var(--white); border-color: var(--border2); background: var(--surface2); }
-.content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0 20px 24px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-.content::-webkit-scrollbar { display: none; }
-.pane { display: none; }
-.pane.on { display: block; }
-.sec { display: flex; align-items: center; gap: 10px; margin: 24px 0 12px; }
-.sec:first-child { margin-top: 0; }
-.sec-text { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray3); white-space: nowrap; }
-.sec-line { flex: 1; height: 1px; background: var(--border); }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-.card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 18px 16px 16px; position: relative; }
-.card-dot { width: 8px; height: 8px; border-radius: 50%; margin-bottom: 12px; }
-.card-label { font-size: 13px; font-weight: 500; color: var(--gray2); margin-bottom: 8px; }
-.card-num { font-size: 44px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--white); font-variant-numeric: tabular-nums; }
-.grid3 .card-num { font-size: 34px; }
-.card-sub { font-size: 11px; color: var(--gray3); margin-top: 8px; font-weight: 400; }
-.delta { position: absolute; top: 16px; right: 14px; font-size: 12px; font-weight: 600; font-family: var(--mono); padding: 3px 8px; border-radius: 6px; }
-.up { background: var(--green-bg); color: var(--green); }
-.dn { background: var(--red-bg);   color: var(--red); }
-.prog-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 20px; margin-bottom: 12px; }
-.prog-item { margin-bottom: 18px; }
-.prog-item:last-child { margin-bottom: 0; }
-.prog-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
-.prog-name { font-size: 14px; font-weight: 500; color: var(--gray1); }
-.prog-nums { display: flex; align-items: baseline; gap: 4px; }
-.prog-current { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; }
-.prog-goal    { font-size: 13px; color: var(--gray3); font-weight: 400; }
-.prog-pct     { font-size: 13px; font-weight: 600; margin-left: 6px; }
-.prog-track { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
-.prog-fill  { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
-.funnel { display: flex; flex-direction: column; gap: 8px; }
-.fn-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); position: relative; overflow: hidden; }
-.fn-bg  { position: absolute; left: 0; top: 0; bottom: 0; opacity: 0.1; transition: width 1s cubic-bezier(0.16,1,0.3,1); }
-.fn-label { font-size: 14px; font-weight: 500; color: var(--gray1); position: relative; z-index: 1; }
-.fn-num   { font-size: 26px; font-weight: 700; position: relative; z-index: 1; letter-spacing: -0.02em; }
-.chart-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 20px 18px; margin-bottom: 10px; }
-.chart-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray3); margin-bottom: 16px; }
-.cal-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); padding: 20px; }
-.cal-hdrs { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; margin-bottom: 6px; }
-.cal-hdr  { font-size: 11px; font-weight: 500; color: var(--gray3); text-align: center; padding-bottom: 4px; }
-.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
-.cal-cell { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; color: var(--gray3); background: var(--surface2); }
-.cal-cell.active { background: rgba(245,230,66,0.2); color: var(--yellow); }
-.cal-cell.strong { background: rgba(245,230,66,0.5); color: #1a1a00; font-weight: 700; }
-.cal-cell.today  { outline: 2px solid var(--yellow); outline-offset: -2px; }
-.cal-cell.empty  { background: transparent; }
-.input-block { margin-bottom: 20px; }
-.input-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.input-period { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray3); white-space: nowrap; }
-.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.input-full { grid-column: 1 / -1; }
-.field { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r-sm); padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; transition: border-color 0.2s; }
-.field:focus-within { border-color: var(--border2); }
-.field-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray2); }
-.field input { background: transparent; border: none; outline: none; font-family: var(--sans); font-size: 28px; font-weight: 700; color: var(--white); width: 100%; letter-spacing: -0.02em; }
-.field input::placeholder { color: var(--gray3); font-weight: 400; font-size: 22px; }
-.btn { width: 100%; padding: 17px; margin-top: 6px; background: var(--white); color: #0d0d0d; font-family: var(--sans); font-size: 16px; font-weight: 700; letter-spacing: 0.02em; border: none; border-radius: var(--r); cursor: pointer; transition: opacity 0.2s, transform 0.12s; }
-.btn:hover  { opacity: 0.9; }
-.btn:active { transform: scale(0.99); opacity: 0.8; }
-.divider { height: 1px; background: var(--border); margin: 24px 0; }
-.toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%) translateY(12px); background: var(--surface2); border: 1.5px solid var(--border2); border-radius: 100px; padding: 13px 22px; font-size: 14px; font-weight: 500; color: var(--white); opacity: 0; pointer-events: none; white-space: nowrap; max-width: 90vw; z-index: 999; transition: opacity 0.3s, transform 0.35s cubic-bezier(0.34,1.4,0.64,1); }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.nav { display: flex; border-top: 1px solid var(--border); flex-shrink: 0; background: rgba(13,13,13,0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding-bottom: env(safe-area-inset-bottom,0); }
-.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 12px 4px 14px; gap: 5px; background: transparent; border: none; cursor: pointer; }
-.nav-ico { font-size: 20px; opacity: 0.35; transition: opacity 0.2s; }
-.nav-txt { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--gray3); transition: color 0.2s; }
-.nav-btn.on .nav-ico { opacity: 1; }
-.nav-btn.on .nav-txt { color: var(--white); }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}
+.shell{display:flex;flex-direction:column;height:100dvh;max-width:430px;margin:0 auto}
+
+/* Header */
+.hdr{padding:52px 20px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.hdr-title{font-size:18px;font-weight:700;letter-spacing:-0.01em}
+.hdr-date{font-size:12px;color:var(--gray2);font-weight:400;margin-top:2px}
+.streak{display:flex;align-items:center;gap:6px;background:#1c2a1a;border:1.5px solid #3a5c35;border-radius:100px;padding:7px 14px;font-size:14px;font-weight:700;color:#52e08a}
+.sdot{width:7px;height:7px;border-radius:50%;background:#52e08a;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* Tabs */
+.tabs{display:flex;padding:8px 20px 14px;gap:4px;flex-shrink:0}
+.tab{flex:1;padding:10px 4px;font-size:13px;font-weight:600;color:var(--gray2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .18s;letter-spacing:0.01em}
+.tab.on{color:var(--white);border-bottom-color:var(--white)}
+
+/* Scroll */
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 20px 28px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+.pane{display:none}.pane.on{display:block}
+
+/* ── TODAY HERO ── */
+.today-hero{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:22px 20px 20px;margin-bottom:12px}
+.hero-label{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray2);margin-bottom:16px}
+.rings-row{display:flex;gap:16px;align-items:center;justify-content:center}
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;flex:1}
+.ring-canvas-wrap{position:relative;width:120px;height:120px}
+.ring-canvas-wrap canvas{position:absolute;top:0;left:0}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.ring-big{font-size:28px;font-weight:800;letter-spacing:-0.03em;line-height:1}
+.ring-small{font-size:11px;color:var(--gray2);font-weight:500}
+.ring-name{font-size:13px;font-weight:600;color:var(--gray1)}
+.ring-remain{font-size:12px;color:var(--gray2);font-weight:400}
+
+/* ── SCOREBOARD ── */
+.score-section{margin-bottom:4px}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin:20px 0 10px}
+.sec-hdr:first-child{margin-top:0}
+.sec-lbl{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray2);white-space:nowrap}
+.sec-line{flex:1;height:1px;background:var(--border)}
+
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.score-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:18px 16px 16px;position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#444)}
+.score-lbl{font-size:12px;font-weight:500;color:var(--gray2);margin-bottom:6px}
+.score-num{font-size:48px;font-weight:800;line-height:1;letter-spacing:-0.04em;color:var(--white);font-variant-numeric:tabular-nums}
+.score-sub{font-size:11px;color:var(--gray3);margin-top:6px;font-weight:500}
+.score-delta{position:absolute;top:16px;right:14px;font-size:12px;font-weight:700;font-family:var(--mono);padding:3px 8px;border-radius:6px}
+.delta-up{background:rgba(82,224,138,0.15);color:var(--green)}
+.delta-dn{background:rgba(255,107,107,0.15);color:var(--red)}
+
+.score-grid3{grid-template-columns:1fr 1fr 1fr}
+.score-grid3 .score-num{font-size:36px}
+
+/* ── WEEKLY BAR ── */
+.week-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:18px 16px;margin-bottom:8px}
+.week-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.week-title{font-size:13px;font-weight:600;color:var(--gray1)}
+.week-vals{display:flex;gap:16px}
+.wv{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.wv-num{font-size:22px;font-weight:800;letter-spacing:-0.02em}
+.wv-lbl{font-size:10px;color:var(--gray2);font-weight:500}
+.bar-pair{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:flex;align-items:center;gap:10px}
+.bar-lbl{font-size:12px;color:var(--gray2);font-weight:500;width:44px;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--card2);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .8s cubic-bezier(.16,1,.3,1)}
+.bar-val{font-size:13px;font-weight:700;width:28px;text-align:right;flex-shrink:0}
+
+/* ── FUNNEL ── */
+.fn-list{display:flex;flex-direction:column;gap:6px}
+.fn-row{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;position:relative;overflow:hidden}
+.fn-bg{position:absolute;left:0;top:0;bottom:0;transition:width 1s cubic-bezier(.16,1,.3,1);opacity:0.12}
+.fn-lbl{font-size:14px;font-weight:600;color:var(--gray1);position:relative;z-index:1}
+.fn-num{font-size:28px;font-weight:800;position:relative;z-index:1;letter-spacing:-0.03em}
+
+/* ── TREND CHART ── */
+.chart-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px}
+.chart-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.chart-title{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray2)}
+.chart-legend{display:flex;gap:12px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:var(--gray2)}
+.leg-dot{width:8px;height:8px;border-radius:50%}
+
+/* ── CALENDAR ── */
+.cal-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:18px}
+.cal-month{font-size:13px;font-weight:700;color:var(--gray1);margin-bottom:12px}
+.cal-hdrs{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px}
+.cal-hdr{font-size:10px;font-weight:600;color:var(--gray3);text-align:center;padding-bottom:4px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cc{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--gray3);background:var(--card2)}
+.cc.active{background:rgba(255,224,61,0.2);color:var(--yellow)}
+.cc.strong{background:rgba(255,224,61,0.55);color:#1a1500;font-weight:800}
+.cc.today{outline:2px solid var(--yellow);outline-offset:-2px;color:var(--yellow)}
+.cc.empty{background:transparent}
+
+/* ── INPUT ── */
+.inp-block{margin-bottom:18px}
+.inp-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.inp-period{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray2);white-space:nowrap}
+.inp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.inp-full{grid-column:1/-1}
+.field{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:5px;transition:border-color .2s}
+.field:focus-within{border-color:#555}
+.field-lbl{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray2)}
+.field input{background:transparent;border:none;outline:none;font-family:var(--sans);font-size:30px;font-weight:800;color:var(--white);width:100%;letter-spacing:-0.03em}
+.field input::placeholder{color:var(--gray3);font-weight:500;font-size:24px}
+.save-btn{width:100%;padding:17px;margin-top:4px;background:var(--white);color:#111113;font-family:var(--sans);font-size:16px;font-weight:800;letter-spacing:0.02em;border:none;border-radius:14px;cursor:pointer;transition:opacity .2s,transform .12s}
+.save-btn:active{transform:scale(.99);opacity:.85}
+.sec-btn{background:var(--card2);color:var(--white);border:1.5px solid var(--border);margin-top:8px}
+.divider{height:1px;background:var(--border);margin:22px 0}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--card2);border:1.5px solid #555;border-radius:100px;padding:13px 22px;font-size:14px;font-weight:600;color:var(--white);opacity:0;pointer-events:none;white-space:nowrap;max-width:88vw;z-index:999;transition:opacity .3s,transform .3s cubic-bezier(.34,1.4,.64,1)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── NAV ── */
+.nav{display:flex;border-top:1px solid var(--border);flex-shrink:0;background:rgba(17,17,19,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding-bottom:env(safe-area-inset-bottom,0)}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 4px 14px;gap:4px;background:transparent;border:none;cursor:pointer}
+.nav-ico{font-size:20px;opacity:.3;transition:opacity .2s}
+.nav-txt{font-size:11px;font-weight:600;color:var(--gray2);transition:color .2s;letter-spacing:.02em}
+.nav-btn.on .nav-ico{opacity:1}
+.nav-btn.on .nav-txt{color:var(--white)}
 </style>
 </head>
 <body>
 <div class="shell">
   <div class="hdr">
-    <div class="hdr-left">
-      <h1>XECTOR1</h1>
-      <p id="today-label"></p>
+    <div>
+      <div class="hdr-title">XECTOR1</div>
+      <div class="hdr-date" id="hdr-date"></div>
     </div>
-    <div class="streak-pill">
-      <span class="streak-dot"></span>
-      <span id="streak-num">0</span>日連続
-    </div>
+    <div class="streak"><span class="sdot"></span><span id="streak-n">0</span>日連続</div>
   </div>
+
   <div class="tabs">
-    <button class="tab on" onclick="go('overview',this)">概要</button>
-    <button class="tab"    onclick="go('funnel',this)">ファネル</button>
-    <button class="tab"    onclick="go('trend',this)">推移</button>
-    <button class="tab"    onclick="go('input',this)">入力</button>
+    <button class="tab on" onclick="go('today',this)">今日</button>
+    <button class="tab" onclick="go('score',this)">スコア</button>
+    <button class="tab" onclick="go('trend',this)">推移</button>
+    <button class="tab" onclick="go('input',this)">入力</button>
   </div>
+
   <div class="content">
-    <div class="pane on" id="pane-overview">
-      <div class="sec"><span class="sec-text">毎日</span><span class="sec-line"></span></div>
-      <div class="grid2">
-        <div class="card">
-          <div class="card-dot" style="background:var(--yellow);"></div>
-          <div class="card-label">DM 送信数</div>
-          <div class="card-num" id="v-dm">—</div>
-          <div class="card-sub">Today</div>
-          <div class="delta" id="d-dm"></div>
-        </div>
-        <div class="card">
-          <div class="card-dot" style="background:var(--cyan);"></div>
-          <div class="card-label">LINE 追加</div>
-          <div class="card-num" id="v-line">—</div>
-          <div class="card-sub">Today</div>
-          <div class="delta" id="d-line"></div>
-        </div>
-      </div>
-      <div class="prog-card">
-        <div class="prog-item">
-          <div class="prog-top">
-            <span class="prog-name">DM 達成率</span>
-            <div class="prog-nums">
-              <span class="prog-current" id="pv-dm">0</span>
-              <span class="prog-goal" id="pg-dm">/ 30</span>
-              <span class="prog-pct" style="color:var(--yellow);" id="pp-dm">0%</span>
+
+    <!-- ══ TODAY ══ -->
+    <div class="pane on" id="pane-today">
+      <!-- Ring progress -->
+      <div class="today-hero">
+        <div class="hero-label">今日の達成率</div>
+        <div class="rings-row">
+          <div class="ring-wrap">
+            <div class="ring-canvas-wrap">
+              <canvas id="ringDM" width="120" height="120"></canvas>
+              <div class="ring-center">
+                <div class="ring-big" id="ring-dm-val" style="color:var(--yellow)">0</div>
+                <div class="ring-small" id="ring-dm-pct">0%</div>
+              </div>
             </div>
+            <div class="ring-name">DM 送信</div>
+            <div class="ring-remain" id="ring-dm-remain">あと30件</div>
           </div>
-          <div class="prog-track"><div class="prog-fill" id="pb-dm" style="width:0%;background:var(--yellow);"></div></div>
-        </div>
-        <div class="prog-item">
-          <div class="prog-top">
-            <span class="prog-name">LINE 達成率</span>
-            <div class="prog-nums">
-              <span class="prog-current" id="pv-line">0</span>
-              <span class="prog-goal" id="pg-line">/ 5</span>
-              <span class="prog-pct" style="color:var(--cyan);" id="pp-line">0%</span>
+          <div class="ring-wrap">
+            <div class="ring-canvas-wrap">
+              <canvas id="ringLINE" width="120" height="120"></canvas>
+              <div class="ring-center">
+                <div class="ring-big" id="ring-line-val" style="color:var(--cyan)">0</div>
+                <div class="ring-small" id="ring-line-pct">0%</div>
+              </div>
             </div>
+            <div class="ring-name">LINE 追加</div>
+            <div class="ring-remain" id="ring-line-remain">あと5件</div>
           </div>
-          <div class="prog-track"><div class="prog-fill" id="pb-line" style="width:0%;background:var(--cyan);"></div></div>
         </div>
       </div>
-      <div class="sec"><span class="sec-text">週次</span><span class="sec-line"></span></div>
-      <div class="grid2">
-        <div class="card">
-          <div class="card-dot" style="background:var(--violet);"></div>
-          <div class="card-label">AD 予約数</div>
-          <div class="card-num" id="v-ad-rsv">—</div>
-          <div class="card-sub">This week</div>
+
+      <!-- Delta from yesterday -->
+      <div class="score-grid" style="margin-bottom:12px">
+        <div class="score-card" style="--accent:var(--yellow)">
+          <div class="score-lbl">DM 送信数</div>
+          <div class="score-num" id="td-dm">0</div>
+          <div class="score-sub">Today</div>
+          <div class="score-delta" id="delta-dm"></div>
         </div>
-        <div class="card">
-          <div class="card-dot" style="background:var(--violet);"></div>
-          <div class="card-label">AD 実施数</div>
-          <div class="card-num" id="v-ad-done">—</div>
-          <div class="card-sub">This week</div>
+        <div class="score-card" style="--accent:var(--cyan)">
+          <div class="score-lbl">LINE 追加</div>
+          <div class="score-num" id="td-line">0</div>
+          <div class="score-sub">Today</div>
+          <div class="score-delta" id="delta-line"></div>
         </div>
       </div>
-      <div class="sec"><span class="sec-text">月次</span><span class="sec-line"></span></div>
-      <div class="grid3">
-        <div class="card">
-          <div class="card-dot" style="background:var(--red);"></div>
-          <div class="card-label">面談</div>
-          <div class="card-num" id="v-meet">—</div>
-          <div class="card-sub">Today</div>
+
+      <!-- Weekly -->
+      <div class="sec-hdr"><span class="sec-lbl">今週</span><span class="sec-line"></span></div>
+      <div class="week-card">
+        <div class="week-top">
+          <div class="week-title">AD オーディション</div>
+          <div class="week-vals">
+            <div class="wv"><div class="wv-num" id="wv-rsv" style="color:var(--violet)">0</div><div class="wv-lbl">予約</div></div>
+            <div class="wv"><div class="wv-num" id="wv-done" style="color:var(--green)">0</div><div class="wv-lbl">実施</div></div>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-dot" style="background:var(--red);"></div>
-          <div class="card-label">契約</div>
-          <div class="card-num" id="v-contract">—</div>
-          <div class="card-sub">Today</div>
-        </div>
-        <div class="card">
-          <div class="card-dot" style="background:var(--green);"></div>
-          <div class="card-label">入金</div>
-          <div class="card-num" id="v-payment">—</div>
-          <div class="card-sub">Today</div>
+        <div class="bar-pair">
+          <div class="bar-row">
+            <div class="bar-lbl" style="color:var(--violet)">予約</div>
+            <div class="bar-track"><div class="bar-fill" id="bar-rsv" style="width:0%;background:var(--violet)"></div></div>
+            <div class="bar-val" id="bv-rsv" style="color:var(--violet)">0</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lbl" style="color:var(--green)">実施</div>
+            <div class="bar-track"><div class="bar-fill" id="bar-done" style="width:0%;background:var(--green)"></div></div>
+            <div class="bar-val" id="bv-done" style="color:var(--green)">0</div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="pane" id="pane-funnel">
-      <div class="sec" style="margin-top:0;"><span class="sec-text">今月のファネル</span><span class="sec-line"></span></div>
-      <div class="funnel" id="funnel"></div>
-      <div class="sec"><span class="sec-text">今週のAD</span><span class="sec-line"></span></div>
-      <div class="chart-card">
-        <div class="chart-label">予約 vs 実施</div>
-        <div style="position:relative;height:150px;"><canvas id="adChart" role="img" aria-label="AD予約と実施の比較">AD比較グラフ。</canvas></div>
+
+    <!-- ══ SCORE ══ -->
+    <div class="pane" id="pane-score">
+      <div class="sec-hdr" style="margin-top:0"><span class="sec-lbl">今月のスコア</span><span class="sec-line"></span></div>
+      <div class="score-grid score-grid3" style="margin-bottom:8px">
+        <div class="score-card" style="--accent:var(--red)">
+          <div class="score-lbl">面談</div>
+          <div class="score-num" id="sc-meet">0</div>
+          <div class="score-sub">This month</div>
+        </div>
+        <div class="score-card" style="--accent:var(--yellow)">
+          <div class="score-lbl">契約</div>
+          <div class="score-num" id="sc-contract">0</div>
+          <div class="score-sub">This month</div>
+        </div>
+        <div class="score-card" style="--accent:var(--green)">
+          <div class="score-lbl">入金</div>
+          <div class="score-num" id="sc-payment">0</div>
+          <div class="score-sub">This month</div>
+        </div>
       </div>
+      <div class="sec-hdr"><span class="sec-lbl">今月ファネル</span><span class="sec-line"></span></div>
+      <div class="fn-list" id="funnel"></div>
     </div>
+
+    <!-- ══ TREND ══ -->
     <div class="pane" id="pane-trend">
-      <div class="sec" style="margin-top:0;"><span class="sec-text">直近14日</span><span class="sec-line"></span></div>
+      <div class="sec-hdr" style="margin-top:0"><span class="sec-lbl">直近14日</span><span class="sec-line"></span></div>
       <div class="chart-card">
-        <div class="chart-label">DM + LINE 推移</div>
-        <div style="position:relative;height:190px;"><canvas id="trendChart" role="img" aria-label="14日推移グラフ">推移グラフ。</canvas></div>
+        <div class="chart-top">
+          <div class="chart-title">DM + LINE</div>
+          <div class="chart-legend">
+            <div class="leg"><div class="leg-dot" style="background:var(--yellow)"></div>DM</div>
+            <div class="leg"><div class="leg-dot" style="background:var(--cyan)"></div>LINE</div>
+          </div>
+        </div>
+        <div style="position:relative;height:190px"><canvas id="trendChart" role="img" aria-label="14日間DM・LINE推移グラフ">推移グラフ。</canvas></div>
       </div>
-      <div class="sec"><span class="sec-text">活動カレンダー</span><span class="sec-line"></span></div>
+      <div class="sec-hdr"><span class="sec-lbl">活動カレンダー</span><span class="sec-line"></span></div>
       <div class="cal-card">
+        <div class="cal-month" id="cal-month"></div>
         <div class="cal-hdrs">
           <div class="cal-hdr">日</div><div class="cal-hdr">月</div><div class="cal-hdr">火</div>
           <div class="cal-hdr">水</div><div class="cal-hdr">木</div><div class="cal-hdr">金</div><div class="cal-hdr">土</div>
@@ -239,112 +289,168 @@ body { background: var(--bg); color: var(--white); font-family: var(--sans); -we
         <div class="cal-grid" id="cal"></div>
       </div>
     </div>
+
+    <!-- ══ INPUT ══ -->
     <div class="pane" id="pane-input">
-      <div class="input-block">
-        <div class="input-header">
-          <span class="input-period">毎日</span><span class="sec-line"></span>
-          <span style="font-size:12px;color:var(--gray3);" id="input-today"></span>
+      <div class="inp-block">
+        <div class="inp-hdr">
+          <span class="inp-period">毎日</span><span class="sec-line"></span>
+          <span style="font-size:12px;color:var(--gray2);font-weight:500" id="inp-date"></span>
         </div>
-        <div class="input-grid">
-          <div class="field"><div class="field-label">DM 送信数</div><input type="number" id="in-dm" min="0" placeholder="0" inputmode="numeric"></div>
-          <div class="field"><div class="field-label">LINE 追加</div><input type="number" id="in-line" min="0" placeholder="0" inputmode="numeric"></div>
-        </div>
-      </div>
-      <div class="input-block">
-        <div class="input-header"><span class="input-period">週次</span><span class="sec-line"></span><span style="font-size:12px;color:var(--gray3);">週末に入力</span></div>
-        <div class="input-grid">
-          <div class="field"><div class="field-label">AD 予約数</div><input type="number" id="in-ad-rsv" min="0" placeholder="—" inputmode="numeric"></div>
-          <div class="field"><div class="field-label">AD 実施数</div><input type="number" id="in-ad-done" min="0" placeholder="—" inputmode="numeric"></div>
+        <div class="inp-grid">
+          <div class="field"><div class="field-lbl">DM 送信数</div><input type="number" id="in-dm" min="0" placeholder="0" inputmode="numeric"></div>
+          <div class="field"><div class="field-lbl">LINE 追加</div><input type="number" id="in-line" min="0" placeholder="0" inputmode="numeric"></div>
         </div>
       </div>
-      <div class="input-block">
-        <div class="input-header"><span class="input-period">月次</span><span class="sec-line"></span><span style="font-size:12px;color:var(--gray3);">月末に入力</span></div>
-        <div class="input-grid">
-          <div class="field"><div class="field-label">面談実施数</div><input type="number" id="in-meet" min="0" placeholder="—" inputmode="numeric"></div>
-          <div class="field"><div class="field-label">契約数</div><input type="number" id="in-contract" min="0" placeholder="—" inputmode="numeric"></div>
-          <div class="field input-full"><div class="field-label">入金数</div><input type="number" id="in-payment" min="0" placeholder="—" inputmode="numeric"></div>
+      <div class="inp-block">
+        <div class="inp-hdr"><span class="inp-period">週次</span><span class="sec-line"></span><span style="font-size:12px;color:var(--gray2);font-weight:500">週末に入力</span></div>
+        <div class="inp-grid">
+          <div class="field"><div class="field-lbl">AD 予約数</div><input type="number" id="in-rsv" min="0" placeholder="—" inputmode="numeric"></div>
+          <div class="field"><div class="field-lbl">AD 実施数</div><input type="number" id="in-done" min="0" placeholder="—" inputmode="numeric"></div>
         </div>
       </div>
-      <button class="btn" id="save-btn">保存する</button>
+      <div class="inp-block">
+        <div class="inp-hdr"><span class="inp-period">月次</span><span class="sec-line"></span><span style="font-size:12px;color:var(--gray2);font-weight:500">月末に入力</span></div>
+        <div class="inp-grid">
+          <div class="field"><div class="field-lbl">面談実施数</div><input type="number" id="in-meet" min="0" placeholder="—" inputmode="numeric"></div>
+          <div class="field"><div class="field-lbl">契約数</div><input type="number" id="in-ct" min="0" placeholder="—" inputmode="numeric"></div>
+          <div class="field inp-full"><div class="field-lbl">入金数</div><input type="number" id="in-pay" min="0" placeholder="—" inputmode="numeric"></div>
+        </div>
+      </div>
+      <button class="save-btn" id="save-btn">保存する</button>
       <div class="divider"></div>
-      <div class="input-block">
-        <div class="input-header"><span class="input-period">目標設定</span><span class="sec-line"></span></div>
-        <div class="input-grid">
-          <div class="field"><div class="field-label">DM 日次目標</div><input type="number" id="goal-dm" min="1" placeholder="30" inputmode="numeric"></div>
-          <div class="field"><div class="field-label">LINE 日次目標</div><input type="number" id="goal-line" min="1" placeholder="5" inputmode="numeric"></div>
+      <div class="inp-block">
+        <div class="inp-hdr"><span class="inp-period">目標設定</span><span class="sec-line"></span></div>
+        <div class="inp-grid">
+          <div class="field"><div class="field-lbl">DM 日次目標</div><input type="number" id="g-dm" min="1" placeholder="30" inputmode="numeric"></div>
+          <div class="field"><div class="field-lbl">LINE 日次目標</div><input type="number" id="g-line" min="1" placeholder="5" inputmode="numeric"></div>
         </div>
-        <button class="btn" id="goal-btn" style="background:var(--surface2);color:var(--white);border:1.5px solid var(--border2);margin-top:8px;">目標を更新</button>
+        <button class="save-btn sec-btn" id="goal-btn">目標を更新</button>
       </div>
     </div>
-  </div>
+
+  </div><!-- /content -->
+
   <div class="nav">
-    <button class="nav-btn on" onclick="go('overview',this)"><span class="nav-ico">◈</span><span class="nav-txt">概要</span></button>
-    <button class="nav-btn"    onclick="go('funnel',this)"><span class="nav-ico">▽</span><span class="nav-txt">ファネル</span></button>
-    <button class="nav-btn"    onclick="go('trend',this)"><span class="nav-ico">↗</span><span class="nav-txt">推移</span></button>
-    <button class="nav-btn"    onclick="go('input',this)"><span class="nav-ico">＋</span><span class="nav-txt">入力</span></button>
+    <button class="nav-btn on" onclick="go('today',this)"><span class="nav-ico">◎</span><span class="nav-txt">今日</span></button>
+    <button class="nav-btn" onclick="go('score',this)"><span class="nav-ico">⬡</span><span class="nav-txt">スコア</span></button>
+    <button class="nav-btn" onclick="go('trend',this)"><span class="nav-ico">↗</span><span class="nav-txt">推移</span></button>
+    <button class="nav-btn" onclick="go('input',this)"><span class="nav-ico">＋</span><span class="nav-txt">入力</span></button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const SK="x1v4",GK="x1g3";
-const ld=k=>{try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return{}}};
+const SK='x1v5',GK='x1g4';
+const ld=k=>{try{return JSON.parse(localStorage.getItem(k)||'{}')}catch(e){return{}}};
 const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const now=new Date();
 const dk=d=>d.toISOString().slice(0,10);
-const wk=d=>{const j=new Date(d.getFullYear(),0,4);return d.getFullYear()+"-W"+String(Math.ceil(((d-j)/864e5+j.getDay()+1)/7)).padStart(2,"0")};
-const mk=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+const wk=d=>{const j=new Date(d.getFullYear(),0,4);return d.getFullYear()+'-W'+String(Math.ceil(((d-j)/864e5+j.getDay()+1)/7)).padStart(2,'0')};
+const mk=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
 const TODAY=dk(now),THIS_W=wk(now),THIS_M=mk(now),YEST=dk(new Date(now-864e5));
-const WD=["日","月","火","水","木","金","土"];
-document.getElementById("today-label").textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${WD[now.getDay()]}）`;
-document.getElementById("input-today").textContent=`${now.getMonth()+1}/${now.getDate()}（${WD[now.getDay()]}）`;
+const WD=['日','月','火','水','木','金','土'];
+
+document.getElementById('hdr-date').textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${WD[now.getDay()]}）`;
+document.getElementById('inp-date').textContent=`${now.getMonth()+1}/${now.getDate()}（${WD[now.getDay()]}）`;
+
 function calcStreak(s){let n=0,d=new Date(now);while(true){const k=dk(d);if(s[k]&&(s[k].dm||s[k].line)){n++;d.setDate(d.getDate()-1);}else break;}return n;}
-const MSGS=["記録した。積み上げが全てだ。","今日も前進した。この調子で。","継続は力。明日もここを開こう。","行動した分だけ結果に近づく。","ナイス。数字が積み上がってる。"];
-function showToast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2800);}
-function setV(id,v){document.getElementById(id).textContent=v!==undefined?v:"—";}
-function setDelta(id,v,p){const el=document.getElementById(id);if(v===undefined||p===undefined){el.textContent="";el.className="delta";return;}const d=v-p;el.textContent=(d>=0?"+":"")+d;el.className="delta "+(d>=0?"up":"dn");}
-function renderOverview(){
+
+const MSGS=['記録した。積み上げが全てだ！','今日も前進した。この調子で！','継続は力。明日もここを開こう！','行動した分だけ結果に近づく！','ナイス。数字が積み上がってるぞ！'];
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800);}
+
+// Ring drawing
+function drawRing(canvasId, pct, color, bg){
+  const c=document.getElementById(canvasId);
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const cx=60,cy=60,r=50,lw=10;
+  ctx.clearRect(0,0,120,120);
+  // bg ring
+  ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,Math.PI*1.5);
+  ctx.strokeStyle=bg;ctx.lineWidth=lw;ctx.lineCap='round';ctx.stroke();
+  // fill ring
+  if(pct>0){
+    const end=-Math.PI/2+(Math.PI*2*(Math.min(pct,100)/100));
+    ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,end);
+    ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.lineCap='round';ctx.stroke();
+  }
+}
+
+function setDelta(id,v,p){
+  const el=document.getElementById(id);
+  if(v===undefined||p===undefined||isNaN(v)||isNaN(p)){el.textContent='';el.className='score-delta';return;}
+  const d=v-p;
+  el.textContent=(d>=0?'+':'')+d;
+  el.className='score-delta '+(d>=0?'delta-up':'delta-dn');
+}
+
+function renderToday(){
   const s=ld(SK),g=ld(GK);
-  const td=s[TODAY]||{},yd=s[YEST]||{},ww=s["w_"+THIS_W]||{},mm=s["m_"+THIS_M]||{};
+  const td=s[TODAY]||{},yd=s[YEST]||{},ww=s['w_'+THIS_W]||{};
   const gdm=g.dm||30,gline=g.line||5;
-  setV("v-dm",td.dm);setDelta("d-dm",td.dm,yd.dm);
-  setV("v-line",td.line);setDelta("d-line",td.line,yd.line);
-  setV("v-ad-rsv",ww.adRsv);setV("v-ad-done",ww.adDone);
-  setV("v-meet",mm.meeting);setV("v-contract",mm.contract);setV("v-payment",mm.payment);
   const dmV=td.dm||0,lineV=td.line||0;
   const dmP=Math.min(Math.round(dmV/gdm*100),100);
   const lineP=Math.min(Math.round(lineV/gline*100),100);
-  document.getElementById("pv-dm").textContent=dmV;
-  document.getElementById("pg-dm").textContent="/ "+gdm;
-  document.getElementById("pp-dm").textContent=dmP+"%";
-  document.getElementById("pv-line").textContent=lineV;
-  document.getElementById("pg-line").textContent="/ "+gline;
-  document.getElementById("pp-line").textContent=lineP+"%";
-  setTimeout(()=>{document.getElementById("pb-dm").style.width=dmP+"%";document.getElementById("pb-line").style.width=lineP+"%";},100);
-  document.getElementById("streak-num").textContent=calcStreak(s);
+
+  // Rings
+  drawRing('ringDM',dmP,'#ffe03d','#2a2800');
+  drawRing('ringLINE',lineP,'#3de8d0','#002a27');
+  document.getElementById('ring-dm-val').textContent=dmV;
+  document.getElementById('ring-dm-pct').textContent=dmP+'%';
+  document.getElementById('ring-line-val').textContent=lineV;
+  document.getElementById('ring-line-pct').textContent=lineP+'%';
+  const dmRem=Math.max(gdm-dmV,0);
+  const lineRem=Math.max(gline-lineV,0);
+  document.getElementById('ring-dm-remain').textContent=dmRem>0?`あと${dmRem}件`:'達成！';
+  document.getElementById('ring-line-remain').textContent=lineRem>0?`あと${lineRem}件`:'達成！';
+
+  // Cards
+  document.getElementById('td-dm').textContent=dmV;
+  document.getElementById('td-line').textContent=lineV;
+  setDelta('delta-dm',dmV,yd.dm||0);
+  setDelta('delta-line',lineV,yd.line||0);
+
+  // Weekly bars
+  const rsv=ww.adRsv||0,done=ww.adDone||0,mx=Math.max(rsv,done,1);
+  document.getElementById('wv-rsv').textContent=rsv;
+  document.getElementById('wv-done').textContent=done;
+  document.getElementById('bv-rsv').textContent=rsv;
+  document.getElementById('bv-done').textContent=done;
+  setTimeout(()=>{
+    document.getElementById('bar-rsv').style.width=Math.round(rsv/mx*100)+'%';
+    document.getElementById('bar-done').style.width=Math.round(done/mx*100)+'%';
+  },100);
+
+  document.getElementById('streak-n').textContent=calcStreak(s);
 }
-function renderFunnel(){
-  const s=ld(SK),mm=s["m_"+THIS_M]||{},ww=s["w_"+THIS_W]||{};
+
+function renderScore(){
+  const s=ld(SK),mm=s['m_'+THIS_M]||{};
+  document.getElementById('sc-meet').textContent=mm.meeting||0;
+  document.getElementById('sc-contract').textContent=mm.contract||0;
+  document.getElementById('sc-payment').textContent=mm.payment||0;
+
   let dmSum=0,lineSum=0;
   const d=new Date(now);
   for(let i=0;i<31;i++){if(mk(d)!==THIS_M)break;const r=s[dk(d)]||{};dmSum+=r.dm||0;lineSum+=r.line||0;d.setDate(d.getDate()-1);}
   const rows=[
-    {label:"DM 送信（累計）",val:dmSum,color:"var(--yellow)"},
-    {label:"LINE 追加（累計）",val:lineSum,color:"var(--cyan)"},
-    {label:"面談実施",val:mm.meeting||0,color:"var(--violet)"},
-    {label:"契約数",val:mm.contract||0,color:"var(--red)"},
-    {label:"入金数",val:mm.payment||0,color:"var(--green)"},
+    {label:'DM送信（累計）',val:dmSum,color:'var(--yellow)'},
+    {label:'LINE追加（累計）',val:lineSum,color:'var(--cyan)'},
+    {label:'面談実施',val:mm.meeting||0,color:'var(--violet)'},
+    {label:'契約数',val:mm.contract||0,color:'var(--red)'},
+    {label:'入金数',val:mm.payment||0,color:'var(--green)'},
   ];
   const mx=Math.max(...rows.map(r=>r.val),1);
-  document.getElementById("funnel").innerHTML=rows.map(r=>`
+  document.getElementById('funnel').innerHTML=rows.map(r=>`
     <div class="fn-row">
-      <div class="fn-bg" style="background:${r.color};width:${Math.round(r.val/mx*100)}%;"></div>
-      <span class="fn-label">${r.label}</span>
-      <span class="fn-num" style="color:${r.color};">${r.val}</span>
-    </div>`).join("");
-  if(window._adC)window._adC.destroy();
-  window._adC=new Chart(document.getElementById("adChart"),{type:"bar",data:{labels:["AD予約","AD実施"],datasets:[{data:[ww.adRsv||0,ww.adDone||0],backgroundColor:["rgba(167,139,250,0.25)","rgba(167,139,250,0.1)"],borderColor:["rgba(167,139,250,0.9)","rgba(167,139,250,0.4)"],borderWidth:1.5,borderRadius:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"rgba(255,255,255,0.05)"},ticks:{color:"#606060",font:{size:12},stepSize:1}},x:{grid:{display:false},ticks:{color:"#a0a0a0",font:{size:13}}}}}});
+      <div class="fn-bg" style="background:${r.color};width:${Math.round(r.val/mx*100)}%"></div>
+      <span class="fn-lbl">${r.label}</span>
+      <span class="fn-num" style="color:${r.color}">${r.val}</span>
+    </div>`).join('');
 }
+
 function renderTrend(){
   const s=ld(SK);
   const days=[];for(let i=13;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);days.push(d);}
@@ -352,52 +458,74 @@ function renderTrend(){
   const dmD=days.map(d=>s[dk(d)]?.dm??null);
   const lineD=days.map(d=>s[dk(d)]?.line??null);
   if(window._tC)window._tC.destroy();
-  window._tC=new Chart(document.getElementById("trendChart"),{type:"line",data:{labels,datasets:[{label:"DM",data:dmD,borderColor:"rgba(245,230,66,0.9)",backgroundColor:"rgba(245,230,66,0.07)",tension:0.4,pointRadius:3,pointBackgroundColor:"rgba(245,230,66,0.9)",fill:true,spanGaps:true},{label:"LINE",data:lineD,borderColor:"rgba(64,217,200,0.9)",backgroundColor:"rgba(64,217,200,0.07)",tension:0.4,pointRadius:3,pointBackgroundColor:"rgba(64,217,200,0.9)",fill:true,borderDash:[5,3],spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"rgba(255,255,255,0.05)"},ticks:{color:"#606060",font:{size:11}}},x:{grid:{display:false},ticks:{color:"#606060",font:{size:10},maxRotation:0,autoSkip:true,maxTicksLimit:7}}}}});
+  window._tC=new Chart(document.getElementById('trendChart'),{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'DM',data:dmD,borderColor:'rgba(255,224,61,.9)',backgroundColor:'rgba(255,224,61,.07)',tension:.4,pointRadius:3,pointBackgroundColor:'rgba(255,224,61,.9)',fill:true,spanGaps:true},
+      {label:'LINE',data:lineD,borderColor:'rgba(61,232,208,.9)',backgroundColor:'rgba(61,232,208,.07)',tension:.4,pointRadius:3,pointBackgroundColor:'rgba(61,232,208,.9)',fill:true,borderDash:[5,3],spanGaps:true}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#666',font:{size:11}}},
+              x:{grid:{display:false},ticks:{color:'#666',font:{size:10},maxRotation:0,autoSkip:true,maxTicksLimit:7}}}}
+  });
+
+  // Calendar
   const yr=now.getFullYear(),mo=now.getMonth();
+  document.getElementById('cal-month').textContent=`${yr}年${mo+1}月`;
   const first=new Date(yr,mo,1).getDay(),total=new Date(yr,mo+1,0).getDate();
-  let html="";
-  for(let i=0;i<first;i++)html+="<div class='cal-cell empty'></div>";
-  for(let day=1;day<=total;day++){const date=new Date(yr,mo,day);const rec=s[dk(date)]||{};const t=(rec.dm||0)+(rec.line||0);const isToday=day===now.getDate();let cls="cal-cell";if(t>0)cls+=t>60?" strong":" active";if(isToday)cls+=" today";html+=`<div class="${cls}">${day}</div>`;}
-  document.getElementById("cal").innerHTML=html;
+  let html='';
+  for(let i=0;i<first;i++)html+="<div class='cc empty'></div>";
+  for(let day=1;day<=total;day++){
+    const date=new Date(yr,mo,day);const rec=s[dk(date)]||{};
+    const t=(rec.dm||0)+(rec.line||0);const isToday=day===now.getDate();
+    let cls='cc';if(t>0)cls+=t>60?' strong':' active';if(isToday)cls+=' today';
+    html+=`<div class="${cls}">${day}</div>`;
+  }
+  document.getElementById('cal').innerHTML=html;
 }
+
 function loadInputs(){
   const s=ld(SK),g=ld(GK);
-  const td=s[TODAY]||{},ww=s["w_"+THIS_W]||{},mm=s["m_"+THIS_M]||{};
+  const td=s[TODAY]||{},ww=s['w_'+THIS_W]||{},mm=s['m_'+THIS_M]||{};
   const set=(id,v)=>{if(v!==undefined)document.getElementById(id).value=v;};
-  set("in-dm",td.dm);set("in-line",td.line);set("in-ad-rsv",ww.adRsv);set("in-ad-done",ww.adDone);
-  set("in-meet",mm.meeting);set("in-contract",mm.contract);set("in-payment",mm.payment);
-  set("goal-dm",g.dm||30);set("goal-line",g.line||5);
+  set('in-dm',td.dm);set('in-line',td.line);
+  set('in-rsv',ww.adRsv);set('in-done',ww.adDone);
+  set('in-meet',mm.meeting);set('in-ct',mm.contract);set('in-pay',mm.payment);
+  set('g-dm',g.dm||30);set('g-line',g.line||5);
 }
-document.getElementById("save-btn").onclick=()=>{
+
+document.getElementById('save-btn').onclick=()=>{
   const s=ld(SK);
-  const dm=parseInt(document.getElementById("in-dm").value);
-  const line=parseInt(document.getElementById("in-line").value);
-  const adRsv=document.getElementById("in-ad-rsv").value;
-  const adDone=document.getElementById("in-ad-done").value;
-  const meet=document.getElementById("in-meet").value;
-  const ct=document.getElementById("in-contract").value;
-  const pay=document.getElementById("in-payment").value;
+  const dm=parseInt(document.getElementById('in-dm').value);
+  const line=parseInt(document.getElementById('in-line').value);
+  const rsv=document.getElementById('in-rsv').value;
+  const done=document.getElementById('in-done').value;
+  const meet=document.getElementById('in-meet').value;
+  const ct=document.getElementById('in-ct').value;
+  const pay=document.getElementById('in-pay').value;
   if(!isNaN(dm)||!isNaN(line))s[TODAY]={dm:isNaN(dm)?0:dm,line:isNaN(line)?0:line};
-  if(adRsv||adDone)s["w_"+THIS_W]={adRsv:parseInt(adRsv)||0,adDone:parseInt(adDone)||0};
-  if(meet||ct||pay)s["m_"+THIS_M]={meeting:parseInt(meet)||0,contract:parseInt(ct)||0,payment:parseInt(pay)||0};
-  sv(SK,s);renderOverview();showToast(MSGS[Math.floor(Math.random()*MSGS.length)]);
+  if(rsv||done)s['w_'+THIS_W]={adRsv:parseInt(rsv)||0,adDone:parseInt(done)||0};
+  if(meet||ct||pay)s['m_'+THIS_M]={meeting:parseInt(meet)||0,contract:parseInt(ct)||0,payment:parseInt(pay)||0};
+  sv(SK,s);renderToday();toast(MSGS[Math.floor(Math.random()*MSGS.length)]);
 };
-document.getElementById("goal-btn").onclick=()=>{
-  sv(GK,{dm:parseInt(document.getElementById("goal-dm").value)||30,line:parseInt(document.getElementById("goal-line").value)||5});
-  renderOverview();showToast("目標を更新した。");
+
+document.getElementById('goal-btn').onclick=()=>{
+  sv(GK,{dm:parseInt(document.getElementById('g-dm').value)||30,line:parseInt(document.getElementById('g-line').value)||5});
+  renderToday();toast('目標を更新した！');
 };
-let cur="overview";
+
+let cur='today';
 function go(id,btn){
-  document.querySelectorAll(".pane").forEach(p=>p.classList.remove("on"));
-  document.querySelectorAll(".tab,.nav-btn").forEach(b=>b.classList.remove("on"));
-  document.getElementById("pane-"+id).classList.add("on");
-  document.querySelectorAll(`[onclick*="'${id}'"]`).forEach(b=>b.classList.add("on"));
-  if(id==="funnel"&&cur!==id)renderFunnel();
-  if(id==="trend"&&cur!==id)renderTrend();
-  if(id==="input")loadInputs();
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab,.nav-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pane-'+id).classList.add('on');
+  document.querySelectorAll(`[onclick*="'${id}'"]`).forEach(b=>b.classList.add('on'));
+  if(id==='score'&&cur!==id)renderScore();
+  if(id==='trend'&&cur!==id)renderTrend();
+  if(id==='input')loadInputs();
   cur=id;
 }
-renderOverview();
+renderToday();
 </script>
 </body>
 </html>
